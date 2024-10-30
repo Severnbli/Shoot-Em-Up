@@ -22,10 +22,6 @@ public class BulletAction : MonoBehaviour {
         bool repeatFire = false;
         int fireIndex = 0;
 
-        void Awake() {
-            StartRepeateFire();
-        }
-
         void OneShot(int index)
         {
             if (IfIndexGood(index))

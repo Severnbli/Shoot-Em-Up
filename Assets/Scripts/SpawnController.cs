@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class SpawnController : MonoBehaviour
 {
-    [SerializeField] private GameObject _obj; // Объект для спавна
+    [SerializeField] private GameObject _object; // Объект для спавна
     
     [SerializeField] private int _quantity; // Количество объектов для спавна
 
@@ -62,7 +62,7 @@ public class SpawnController : MonoBehaviour
     }
 
     void SpawnObject(Vector3 position, int number) {
-        GameObject obj = Instantiate(_obj, position, Quaternion.identity);
+        GameObject obj = Instantiate(_object, position, Quaternion.identity);
 
         obj.name += "_" + number;
     }
