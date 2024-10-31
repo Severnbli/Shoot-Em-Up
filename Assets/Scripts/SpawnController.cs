@@ -64,6 +64,12 @@ public class SpawnController : MonoBehaviour
     void SpawnObject(Vector3 position, int number) {
         GameObject obj = Instantiate(_object, position, Quaternion.identity);
 
-        obj.name += "_" + number;
+        int index = obj.name.IndexOf("(Clone)");
+
+        String newName = obj.name.Substring(0, index);
+        newName += obj.name.Substring(index + "(Clone)".Length) ;
+
+        obj.name = newName + "_" + number.ToString();
+
     }
 }

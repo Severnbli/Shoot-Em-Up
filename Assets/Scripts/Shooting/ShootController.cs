@@ -13,19 +13,28 @@ public class ShootController : MonoBehaviour
 
     private bool _isRepeatFire = false; // Безостановочный огонь
 
-    public void OneShot() {
-        GameObject bullet = Instantiate(_bullet, _bulletStartPosition.position, Quaternion.identity);
+    private bool _isFireAllowed = true;
 
-        if (bullet != null) {
-            Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+    public IEnumerator OneShot() {
+        if (_isFireAllowed) {
+            _isFireAllowed = false;
 
-            if (rb != null) {
-                rb.velocity = _speed * _bulletStartPosition.TransformDirection(Vector3.down);
+            GameObject bullet = Instantiate(_bullet, _bulletStartPosition.position, Quaternion.identity);
+
+            if (bullet != null) {
+                Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+
+                if (rb != null) {
+                    rb.velocity = _speed * _bulletStartPosition.TransformDirection(Vector3.down);
+                } else {
+                    Debug.LogWarning("No Rigidbody 2D component on bullet!");
+                }
             } else {
-                Debug.LogWarning("No Rigidbody 2D component on bullet!");
+                Debug.LogWarning("No bullet prefab!");
             }
-        } else {
-            Debug.LogWarning("No bullet prefab!");
+
+            yield return new WaitForSeconds(_fireDelay);
+            _isFireAllowed = true;
         }
     }
 
@@ -47,9 +56,7 @@ public class ShootController : MonoBehaviour
 
     IEnumerator RepeatFire() {
         while (_isRepeatFire) {
-            OneShot();
-
-            yield return new WaitForSeconds(_fireDelay);
+            yield return OneShot();
         }
     }
 }

@@ -7,7 +7,7 @@ public class PlayerShootController : ShootController
     void FixedUpdate()
     {
         if (Input.GetKey(_key)) {
-            OneShot();
+            StartCoroutine(OneShot());
         }
     }
 }
