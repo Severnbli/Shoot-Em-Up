@@ -7,15 +7,31 @@ public class EnemyController : MonoBehaviour
 {
     [SerializeField] private float _targetChangeoverTime;
     [SerializeField] private float _speed;
+    [SerializeField] private bool _isShadow = false;
 
+    private GameObject _enemy;
     private GameObject _target;
 
     void Start()
     {
-        StartCoroutine(PlayerHunting());
+        if (!_isShadow) {
+            StartCoroutine(PlayerHunting());
+        } else {
+            _enemy = GameObject.FindGameObjectWithTag("Enemy");
+
+            if (_enemy == null) {
+                Debug.LogError("No object with tag Enemy. Shadow mistake.");
+            }
+
+
+        }
     }
 
     void FixedUpdate() {
+        if (_isShadow) {
+            _target = _enemy.GetComponent<EnemyController>()?.GetTarget();
+        }
+
         Hunt();
     }
 
@@ -30,7 +46,6 @@ public class EnemyController : MonoBehaviour
                     activePlayerShips.Add(ship);
                 } 
             }
-
             
             if (activePlayerShips.Count > 0) {
                 GameObject target;
@@ -48,9 +63,13 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    void Hunt() {
+    private void Hunt() {
         if (_target != null) {
             Utils.horizontalSmoothlyMove(_speed, _target.transform.position.x, transform);
         }
+    }
+
+    public GameObject GetTarget() {
+        return _target;
     }
 }

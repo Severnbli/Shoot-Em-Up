@@ -153,6 +153,7 @@ Transform:
   m_Children:
   - {fileID: 862331811}
   - {fileID: 1806992803}
+  - {fileID: 685944583}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &428490934
@@ -186,6 +187,55 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &685944582
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 685944583}
+  - component: {fileID: 685944584}
+  m_Layer: 0
+  m_Name: SpawnEnemyShadow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &685944583
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 685944582}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 100284242}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &685944584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 685944582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb6826ca246384f499d0e579e2943d7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _object: {fileID: 8269535451910103471, guid: ae676d60c86cc754d9edce6a254a9dc9, type: 3}
+  _quantity: 1
+  _interval: 0
+  _centerInterval: 0
+  _spawnStartPosition: {x: 0, y: -3, z: 0}
 --- !u!1 &797652715
 GameObject:
   m_ObjectHideFlags: 0
@@ -337,7 +387,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _object: {fileID: 3421336039733789351, guid: 9b450eb9d856ce04f8bddd6289eb0207, type: 3}
-  _quantity: 2
+  _quantity: 5
   _interval: 3
   _centerInterval: 3
   _spawnStartPosition: {x: 0, y: 3, z: 0}
