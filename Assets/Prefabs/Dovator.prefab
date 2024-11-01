@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 3338367416977833564}
   - component: {fileID: 2336559402207143191}
   - component: {fileID: 136278259737966436}
-  - component: {fileID: -6676503365747489910}
+  - component: {fileID: 7690562446932197069}
+  - component: {fileID: -4097222703727492057}
   m_Layer: 0
   m_Name: Dovator
   m_TagString: Player
@@ -143,7 +144,7 @@ MonoBehaviour:
   _bulletStartPosition: {fileID: 4566283718955846161}
   _fireDelay: 0.5
   _key: 120
---- !u!114 &-6676503365747489910
+--- !u!114 &7690562446932197069
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -155,7 +156,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c696f88afd3acb14ba6aecc46cf79471, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 10
+  _maxSpeed: 10
+  _modificationType: 1
+  _quantityOfCursorZones: 9
+  _quantityOfCenterZones: 3
+  _degreeGround: 2
+--- !u!50 &-4097222703727492057
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 20398453223475590}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &2841011327824038503
 GameObject:
   m_ObjectHideFlags: 0

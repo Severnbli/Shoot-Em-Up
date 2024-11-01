@@ -15,7 +15,7 @@ public class SpawnController : MonoBehaviour
     private Vector3 _intervalVector; // Интервал в векторной форме, для уменьшения копипаста
     private Vector3 _centerIntervalVector; // Центральный интервал в векторной форме, -//-
 
-    void Start() {
+    void Awake() {
         _quantity = Math.Abs(_quantity);
         
         if (_quantity > 0) {
