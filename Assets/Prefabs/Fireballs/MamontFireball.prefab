@@ -137,7 +137,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -147,7 +147,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!114 &-5832926044576810805
 MonoBehaviour:
@@ -161,3 +161,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 317d5bf33d7a2d744b942925944b8cfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _damageCount: 10
+  _friendlyObjects:
+  - {fileID: 3421336039733789351, guid: 9b450eb9d856ce04f8bddd6289eb0207, type: 3}
+  - {fileID: 8269535451910103471, guid: ae676d60c86cc754d9edce6a254a9dc9, type: 3}
+  _destroyDelayOutsideCamera: 1
+  _isItSelfFriendly: 1

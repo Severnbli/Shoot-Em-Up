@@ -1,47 +1,86 @@
-using System;
 using UnityEngine;
 
 public class CameraAnchor : MonoBehaviour
 {
-    [SerializeField] private float _speed; // Скорость центровки камеры
-
-    private GameObject _enemy; // Объект противника (герой)
-    private GameObject[] _playerShips; // Наши корабли
+    private GameObject _enemy;
+    private GameObject[] _playerShips;
+    public float _padding = 2f; // Дополнительное пространство вокруг объектов
 
     void Start() {
-        _enemy =  GameObject.FindGameObjectWithTag("Enemy");
+        _enemy = GameObject.FindGameObjectWithTag("Enemy");
+
+        if (_enemy == null) {
+            Debug.LogError("Camera Anchor: Enemy not found!");
+        }
+
         _playerShips = GameObject.FindGameObjectsWithTag("Player");
     }
 
-    void FixedUpdate() {
-        Utils.horizontalSmoothlyMove(_speed, CalculateNextPosition().x, transform);
+    void FixedUpdate()
+    {
+        Vector3 centroid = CalculateCentroid();
+        float requiredSize = CalculateRequiredSize(centroid);
+
+        MoveCamera(centroid);
+        // AdjustCameraSize(requiredSize);
     }
 
-    // Находим центр между нашими кораблями и героем
-    public Vector3 CalculateNextPosition() {
-        float sumX = 0f;
+    Vector3 CalculateCentroid()
+    {
+        Vector3 sumPosition = Vector3.zero;
+        int count = 0;
 
-        if (_enemy != null) {
-            sumX += _enemy.transform.position.x;
+        if (_enemy != null && _enemy.activeSelf)
+        {
+            sumPosition += _enemy.transform.position;
+            count++;
         }
 
-        int quantity = 0;
-        float sumBuffer = 0f;
-
-        foreach (GameObject ship in _playerShips) {
-            if (ship != null && ship.activeSelf) { // Если ссылка не null и если объект активен (object pooling)
-                quantity++;
-                sumBuffer += ship.transform.position.x;
+        foreach (GameObject ship in _playerShips)
+        {
+            if (ship != null && ship.activeSelf)
+            {
+                sumPosition += ship.transform.position;
+                count++;
             }
         }
 
-        if (quantity != 0) { // Если quantity = 0, то центруемся на героя. Исключительная ситуация
-            sumX += (float) sumBuffer / quantity;
+        return count > 0 ? sumPosition / count : transform.position;
+    }
 
-            sumX /= 2f; // Среднее между средним наших кораблей и героем
+    float CalculateRequiredSize(Vector3 centroid)
+    {
+        float maxDistance = 0f;
 
+        if (_enemy != null && _enemy.activeSelf)
+        {
+            maxDistance = Vector3.Distance(centroid, _enemy.transform.position);
         }
 
-        return new Vector3(sumX, transform.position.y, transform.position.z);
-    } 
+        foreach (GameObject ship in _playerShips)
+        {
+            if (ship != null && ship.activeSelf)
+            {
+                float distance = Vector3.Distance(centroid, ship.transform.position);
+                if (distance > maxDistance)
+                {
+                    maxDistance = distance;
+                }
+            }
+        }
+
+        return maxDistance + _padding;
+    }
+
+    void MoveCamera(Vector3 centroid)
+    {
+        Vector3 newPosition = new Vector3(centroid.x, 0, transform.position.z);
+        transform.position = newPosition;
+    }
+
+    void AdjustCameraSize(float requiredSize)
+    {
+        float maxCameraSize = 7f; // Максимально допустимый размер камеры
+        Camera.main.orthographicSize = Mathf.Min(Mathf.Max(Camera.main.orthographicSize, requiredSize), maxCameraSize);
+    }
 }

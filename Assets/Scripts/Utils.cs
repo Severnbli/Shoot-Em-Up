@@ -35,4 +35,31 @@ public class Utils {
 
         return emptyObject;
     }
+
+    public enum ObjectTags {
+        ENEMY,
+        ENEMY_SHADOW,
+        PLAYER,
+        UNKNOW
+    }
+
+    public static ObjectTags GetTag(string tag) {
+        switch(tag) {
+            case "Enemy": {
+                return ObjectTags.ENEMY;
+            }
+
+            case "EnemyShadow": {
+                return ObjectTags.ENEMY_SHADOW;
+            }
+
+            case "Player": {
+                return ObjectTags.PLAYER;
+            }
+
+            default: {
+                return ObjectTags.UNKNOW;
+            }
+        }
+    }
 }

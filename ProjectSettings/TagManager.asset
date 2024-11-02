@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Fireball
+  - EnemyShadow
   layers:
   - Default
   - TransparentFX

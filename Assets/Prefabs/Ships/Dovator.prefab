@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 2682769454919454384}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.53, z: 0}
+  m_LocalPosition: {x: 0, y: -0.536, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -46,6 +46,8 @@ GameObject:
   - component: {fileID: 1836717993210857299}
   - component: {fileID: 3882287535108442941}
   - component: {fileID: 6139564777700037640}
+  - component: {fileID: 3020610547324924584}
+  - component: {fileID: 7501314993217499553}
   m_Layer: 0
   m_Name: Dovator
   m_TagString: Player
@@ -219,6 +221,93 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &3020610547324924584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3421336039733789351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8dd0a8d0b39e414b864b2835c4b8d2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _healthAmount: 100
+  _armorAmount: 0
+  _isHealthBoundedOnTop: 1
+--- !u!60 &7501314993217499553
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3421336039733789351}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.98, y: 1.5}
+    newSize: {x: 1.98, y: 1.5}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.75, y: -0.39}
+      - {x: 0.87, y: -0.19}
+      - {x: 0.87, y: 0.29}
+      - {x: 0.83, y: 0.59}
+      - {x: 0.69, y: 0.71}
+      - {x: -0.14999999, y: 0.71}
+      - {x: -0.22999999, y: 0.69}
+      - {x: -0.42999998, y: 0.66999996}
+      - {x: -0.66999996, y: 0.71}
+      - {x: -0.69, y: 0.71}
+      - {x: -0.83, y: 0.59}
+      - {x: -0.87, y: 0.39}
+      - {x: -0.87, y: -0.14999999}
+      - {x: -0.83, y: -0.35}
+      - {x: -0.61, y: -0.45}
+      - {x: -0.31, y: -0.41}
+      - {x: -0.22999999, y: -0.55}
+      - {x: -0.089999996, y: -0.69}
+      - {x: 0.089999996, y: -0.69}
+      - {x: 0.21, y: -0.61}
+      - {x: 0.31, y: -0.41}
+      - {x: 0.61, y: -0.42999998}
+    - - {x: -0.03, y: -0.53}
+      - {x: 0.01, y: -0.48999998}
+      - {x: -0.01, y: -0.48999998}
+      - {x: 0.03, y: -0.53}
+      - {x: 0.03, y: -0.57}
+  m_UseDelaunayMesh: 0
 --- !u!1 &4800972029900163285
 GameObject:
   m_ObjectHideFlags: 0

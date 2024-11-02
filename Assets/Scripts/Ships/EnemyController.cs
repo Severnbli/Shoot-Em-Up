@@ -11,6 +11,8 @@ public class EnemyController : MonoBehaviour
 
     private GameObject _enemy;
     private GameObject _target;
+    private Rigidbody2D _rb;
+    private Animator _anim;
 
     void Start()
     {
@@ -23,7 +25,18 @@ public class EnemyController : MonoBehaviour
                 Debug.LogError("No object with tag Enemy. Shadow mistake.");
             }
 
+        }
 
+        _rb = GetComponent<Rigidbody2D>();
+
+        if (!_rb) {
+            Debug.LogWarning("Enemy Controller error: no Rigidbody2D component.");
+        }
+
+        _anim = GetComponent<Animator>();
+
+        if (!_anim) {
+            Debug.LogWarning("Enemy Controller error: no Animator component.");
         }
     }
 
@@ -64,8 +77,18 @@ public class EnemyController : MonoBehaviour
     }
 
     private void Hunt() {
+        float speed = _speed;
+        
         if (_target != null) {
-            Utils.horizontalSmoothlyMove(_speed, _target.transform.position.x, transform);
+            if (Mathf.Abs(transform.position.x - _target.transform.position.x) < .2f) {
+                speed = 0;
+            } else if (transform.position.x > _target.transform.position.x) {
+                speed = -speed;
+            } 
+
+            _rb.velocity = new Vector2(speed, 0);
+
+            _anim.SetFloat("velocityX", _rb.velocity.x);
         }
     }
 
