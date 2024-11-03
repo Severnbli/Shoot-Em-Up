@@ -9,24 +9,21 @@ public class DeathController : MonoBehaviour
 
         switch (objectTag) {
             case Utils.ObjectTags.ENEMY: {
-                deadObject.GetComponent<ExplosionController>()?.StartExplosion();
-
-                // Анимация взрыва у тени
-                GameObject.FindGameObjectWithTag("EnemyShadow")?.GetComponent<ExplosionController>()?.StartExplosion();
+                deadObject.GetComponent<ShipAnimatorController>()?.SetAnimatorIsDestroyedValue(true);
 
                 SceneManager.LoadScene("RepeatScreen");
 
                 break;
             }
 
-            case Utils.ObjectTags.ENEMY_SHADOW: {
-                deadObject.GetComponent<ExplosionController>()?.StartExplosion();
+            // case Utils.ObjectTags.ENEMY_SHADOW: {
+            //     deadObject.GetComponent<ExplosionController>()?.StartExplosion();
 
-                break;
-            }
+            //     break;
+            // }
 
             case Utils.ObjectTags.PLAYER: {
-                deadObject.GetComponent<ExplosionController>()?.StartExplosion();
+                deadObject.GetComponent<ShipAnimatorController>()?.SetAnimatorIsDestroyedValue(true);
 
                 if (GameObject.FindGameObjectsWithTag("Player").Length == 0) {
                     SceneManager.LoadScene("RepeatScreen");

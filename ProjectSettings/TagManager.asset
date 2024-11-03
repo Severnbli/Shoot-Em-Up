@@ -5,8 +5,6 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
-  - Fireball
-  - EnemyShadow
   layers:
   - Default
   - TransparentFX
