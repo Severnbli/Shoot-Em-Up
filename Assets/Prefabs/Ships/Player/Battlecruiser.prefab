@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 4440965320575042245}
   - component: {fileID: 982131101140176602}
   - component: {fileID: -6485178939901362804}
+  - component: {fileID: 8025504612779001402}
+  - component: {fileID: -4657944058569157010}
   m_Layer: 0
   m_Name: Battlecruiser
   m_TagString: Player
@@ -34,7 +36,8 @@ Transform:
   m_LocalPosition: {x: -2, y: 0, z: 0}
   m_LocalScale: {x: 2, y: -2, z: 2}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2885414067086352196}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3958962307709351863
@@ -77,7 +80,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 8988618985834884614, guid: 3467595ea65ffdf4aadb41d9ad918460, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -147,8 +150,8 @@ Rigidbody2D:
     serializedVersion: 2
     m_Bits: 0
   m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_SleepingMode: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!114 &982131101140176602
 MonoBehaviour:
@@ -197,7 +200,7 @@ PolygonCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -225,3 +228,75 @@ PolygonCollider2D:
       - {x: 0.31, y: 0}
       - {x: 0.24, y: 0.19999999}
   m_UseDelaunayMesh: 0
+--- !u!114 &8025504612779001402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 20253142951584349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8dd0a8d0b39e414b864b2835c4b8d2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _healthAmount: 100
+  _armorAmount: 0
+  _isHealthBoundedOnTop: 1
+--- !u!114 &-4657944058569157010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 20253142951584349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e0d4b87112eb8e4f88923f98ef0c1e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputKey:
+    _key: 122
+    _handlerType: 0
+  _isKeyActive: 1
+  _isSkillActive: 1
+  _delay: 10
+  _energyWaste: 0
+  _projectile: {fileID: 254690502540919475, guid: e683cbd4d1b61a141b54cfc63d708a32, type: 3}
+  _speed: 4
+  _damageAmount: 20
+  _localScaleFactor: 2
+  _projectileStartTransform: {fileID: 2885414067086352196}
+  _targetsTags:
+  - Enemy
+--- !u!1 &9116827202503633291
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2885414067086352196}
+  m_Layer: 0
+  m_Name: WeaponStartPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2885414067086352196
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9116827202503633291}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.554, z: 0}
+  m_LocalScale: {x: 1, y: -1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3705367708463271119}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

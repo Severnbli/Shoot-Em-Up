@@ -7,9 +7,16 @@ public class HealthController : MonoBehaviour
     [SerializeField] private bool _isHealthBoundedOnTop = true;
 
     protected float _maxHealth;
+    private ShipAnimatorController _shipController;
 
     void Awake() {
         _maxHealth = _healthAmount;
+
+        _shipController = GetComponent<ShipAnimatorController>();
+
+        if (_shipController == null) {
+            Debug.LogWarning($"{gameObject.name} has no component Ship Animator Controller!");
+        }
     }
 
     public void AddDamage(float amount) {
@@ -19,6 +26,9 @@ public class HealthController : MonoBehaviour
             _armorAmount = newHealth - _healthAmount;
         } else {
             _armorAmount = 0;
+
+            _shipController.SetAnimatorIsArmorValue(false);
+
             _healthAmount = newHealth;
         }
 
@@ -39,5 +49,17 @@ public class HealthController : MonoBehaviour
 
     public void AddArmor(float amount) {
         _armorAmount += amount;
+
+        if (_armorAmount > 0) {
+            _shipController.SetAnimatorIsArmorValue(true);
+        }
+    }
+
+    public void SetArmor(float amount) {
+        _armorAmount = amount;
+
+        if (_armorAmount > 0) {
+            _shipController.SetAnimatorIsArmorValue(true);
+        }
     }
 }

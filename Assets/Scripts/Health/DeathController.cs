@@ -1,9 +1,17 @@
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class DeathController : MonoBehaviour
 {
+    public static List<GameObject> _objectsOnDestroy = new List<GameObject>();
+
     public static void Death(GameObject deadObject) {
+
+        if (_objectsOnDestroy.Contains(deadObject)) {
+            return;
+        } else {
+            _objectsOnDestroy.Add(deadObject);
+        }
         
         Utils.ObjectTags objectTag = Utils.GetTag(deadObject.tag);
 
@@ -11,23 +19,11 @@ public class DeathController : MonoBehaviour
             case Utils.ObjectTags.ENEMY: {
                 deadObject.GetComponent<ShipAnimatorController>()?.SetAnimatorIsDestroyedValue(true);
 
-                SceneManager.LoadScene("RepeatScreen");
-
                 break;
             }
 
-            // case Utils.ObjectTags.ENEMY_SHADOW: {
-            //     deadObject.GetComponent<ExplosionController>()?.StartExplosion();
-
-            //     break;
-            // }
-
             case Utils.ObjectTags.PLAYER: {
                 deadObject.GetComponent<ShipAnimatorController>()?.SetAnimatorIsDestroyedValue(true);
-
-                if (GameObject.FindGameObjectsWithTag("Player").Length == 0) {
-                    SceneManager.LoadScene("RepeatScreen");
-                }
                 
                 break;
             }

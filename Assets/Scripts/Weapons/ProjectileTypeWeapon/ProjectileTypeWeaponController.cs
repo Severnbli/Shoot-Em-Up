@@ -1,0 +1,38 @@
+using UnityEngine;
+
+public class ProjectileTypeWeaponController : WeaponController
+{
+    [SerializeField] private float _destroyDelayOutsideCamera = 1f; // Задержка уничтожения снаряда, когда он выходит за пределы камеры
+
+    protected float _speed;
+
+    protected override void FixedUpdate() {
+        base.FixedUpdate();
+
+        Vector3 viewportPosition = Camera.main.WorldToViewportPoint(transform.position);
+
+        if (viewportPosition.y < 0 || viewportPosition.y > 1) {
+            Destroy(gameObject, _destroyDelayOutsideCamera);
+        }
+    }
+
+    protected override void OnTriggerEnter2D(Collider2D collider)
+    {
+        base.OnTriggerEnter2D(collider);
+
+        if (_isColliderChecked) {
+            Destroy(gameObject);
+        }
+    }
+
+    public void SetSpeed(float speed) {
+        _speed = speed;
+    }
+
+    public override void SetActualScale()
+    {
+        if (Mathf.Sign(transform.localScale.y) != Mathf.Sign(_startTransform.localScale.y)) {
+            transform.localScale = new Vector3(transform.localScale.x, -transform.localScale.y, transform.localScale.z);
+        }
+    }
+}

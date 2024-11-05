@@ -1,7 +1,5 @@
-using System;
-using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class AIController : MonoBehaviour
@@ -14,13 +12,12 @@ public class AIController : MonoBehaviour
     [SerializeField] private float _modeWholeLineDeviation = 1f;
 
     [SerializeField] private OperatingModes _operationMode = OperatingModes.RANDOM;
+    [SerializeField] private float _pursuitProbability = 0.5f;
+    [SerializeField] private float _wholeLineProbability = 0.3f;
+    [SerializeField] private float _doublePenetrationProbability = 0.2f;
 
     private Rigidbody2D _rb;
     private bool _isRandomMode = false;
-    private OperatingModes _previousMode = OperatingModes.RANDOM;
-
-    private bool _isModeActive = false;
-
     public enum OperatingModes {
         PURSUIT,
         WHOLE_LINE,
@@ -28,7 +25,12 @@ public class AIController : MonoBehaviour
         RANDOM
     }
 
-    void Awake()
+    private float _checkTime;
+    private bool _isModeActive;
+    private float _wholeLineDirection;
+    private List<GameObject> _doublePenetrationTargets = new List<GameObject>();
+
+    private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
 
@@ -37,113 +39,124 @@ public class AIController : MonoBehaviour
         }
     }
 
-    void Start() {
-        StartCoroutine(StartWorking());
+    private void FixedUpdate() {
+        if (_isRandomMode && !_isModeActive) {
+            _operationMode = GetRandomOperatingMode();
+        }
+
+        HandleOperatingMode();
     }
 
-    IEnumerator StartWorking() {
-        while (true) {
-            switch (_operationMode) {
-                case OperatingModes.PURSUIT:
-                    yield return StartCoroutine(Pursuit());
-                    break;
-
-                case OperatingModes.WHOLE_LINE:
-                    yield return StartCoroutine(Whole_Line());
-                    break;
-
-                case OperatingModes.DOUBLE_PENETRATION:
-                    yield return StartCoroutine(Double_Penetration());
-                    break;
-
-                case OperatingModes.RANDOM:
-                    _isRandomMode = true;
-                    break;
+    void HandleOperatingMode() {
+        switch (_operationMode) {
+            case OperatingModes.PURSUIT: {
+                Pursuit();
+                break;
             }
-
-            if (_isRandomMode) {
-                _previousMode = _operationMode;
-                _operationMode = GetRandomOperatingModeButNotPrevious();
+            case OperatingModes.WHOLE_LINE: {
+                Whole_Line();
+                break;
             }
-            Debug.Log("Current Mode: " + _operationMode);
+            case OperatingModes.DOUBLE_PENETRATION: {
+                Double_Penetration();
+                break;
+            }
+            case OperatingModes.RANDOM:
+                _isRandomMode = true;
+                break;
         }
     }
 
-    public OperatingModes GetRandomOperatingModeButNotPrevious() {
-        var modes = Enum.GetValues(typeof(OperatingModes))
-                        .Cast<OperatingModes>()
-                        .Where(mode => mode != OperatingModes.RANDOM && mode != _previousMode)
-                        .ToArray();
-
-        if (modes.Length == 0) return _previousMode;
-
-        return modes[UnityEngine.Random.Range(0, modes.Length)];
-    }
-
-    IEnumerator Pursuit() {
-        _isModeActive = true;
+    void Pursuit() {
+        if (!_isModeActive) {
+            _isModeActive = true;
+            _checkTime = Time.time;
+        }
 
         GameObject closestPlayer = GetClosestPlayer();
-        if (closestPlayer == null) yield break;
 
-        float timer = 0f;
-        while (timer < _modePursuitLiveTime && closestPlayer != null) {
-            float direction = Mathf.Sign(closestPlayer.transform.position.x - transform.position.x);
-            _rb.velocity = new Vector2(direction * _speed * _increaseFactorForSpeed * Time.deltaTime, 0);
+        if (closestPlayer != null) {
+            float direction = closestPlayer.transform.position.x - transform.position.x;
 
-            timer += Time.deltaTime;
-            yield return new WaitForFixedUpdate();
-
-            closestPlayer = GetClosestPlayer();  // Обновляем цель
+            if (direction != 0) {
+                direction = Mathf.Sign(direction);
+                _rb.velocity = new Vector2(direction * _speed * _increaseFactorForSpeed * Time.deltaTime, 0);
+            } else {
+                _rb.velocity = Vector2.zero;
+            }
         }
 
-        _isModeActive = false;
+        if (Time.time - _checkTime > _modePursuitLiveTime) {
+            _isModeActive = false;
+        }
     }
 
-    IEnumerator Whole_Line() {
-        _isModeActive = true;
+    void Whole_Line() {
+        if (!_isModeActive) {
+            _isModeActive = true;
 
-        _rb.velocity = Vector2.zero;
-        float direction = UnityEngine.Random.Range(0, 2) * 2 - 1;
+            _wholeLineDirection = UnityEngine.Random.Range(0, 2) * 2 - 1;
 
-        if (direction > 0) {
-            float leftBound = GetLeftBoundPosX();
-            if (leftBound == Mathf.Infinity) yield break;
-            transform.position = new Vector3(leftBound - _modeWholeLineDeviation, transform.position.y);
+            if (_wholeLineDirection > 0) {
+                float leftBound = Utils.GetLeftBoundPlayerShipPosX();
+                if (leftBound == Mathf.Infinity) {
+                    _isModeActive = false;
+                    return;
+                }
+
+                transform.position = new Vector3(leftBound - _modeWholeLineDeviation, transform.position.y);
+            } else {
+                float rightBound = Utils.GetRightBoundPlayerShipPosX();
+                if (rightBound == -Mathf.Infinity) {
+                    _isModeActive = false;
+                    return;
+                }
+
+                transform.position = new Vector3(rightBound + _modeWholeLineDeviation, transform.position.y);
+            }
+
+            _rb.velocity = new Vector2(_wholeLineDirection * _speed * _increaseFactorForSpeed * _modeWholeLineIncreaseFactorForSpeed * Time.deltaTime, 0);
+        }
+
+        if (IsReachedBound(_wholeLineDirection)) {
+            _isModeActive = false;
+        }
+    }
+
+    void Double_Penetration() {
+        if (!_isModeActive) {
+            _doublePenetrationTargets.Clear();
+            _checkTime = Time.time;
+            _isModeActive = true;
+            _rb.velocity = Vector2.zero;
+
+            var players = GameObject.FindGameObjectsWithTag("Player").OrderBy(p => p.transform.position.x).ToArray();
+
+            if (players.Length < 1) {
+                _isModeActive = false;
+                return;
+            } else {
+                GameObject target1 = players[UnityEngine.Random.Range(0, players.Length)];
+                
+                _doublePenetrationTargets.Add(target1);
+
+                if (players.Length >= 2) {
+                    GameObject target2;
+
+                    do {
+                        target2 = players[UnityEngine.Random.Range(0, players.Length)];
+                    } while (target2 == target1);
+                    
+                    _doublePenetrationTargets.Add(target2);
+                }
+            }
+        }
+        
+        if (Time.time - _checkTime < _modeDoublePenetrationLiveTime) {
+            MoveTowardsTargets(_doublePenetrationTargets);
         } else {
-            float rightBound = GetRightBoundPosX();
-            if (rightBound == -Mathf.Infinity) yield break;
-            transform.position = new Vector3(rightBound + _modeWholeLineDeviation, transform.position.y);
+            _isModeActive = false;
         }
-
-        _rb.velocity = new Vector2(direction * _speed * _increaseFactorForSpeed * _modeWholeLineIncreaseFactorForSpeed * Time.deltaTime, 0);
-
-        while (!isReachedBound(direction)) {
-            yield return new WaitForFixedUpdate();
-        }
-
-        _isModeActive = false;
-    }
-
-    IEnumerator Double_Penetration() {
-        _isModeActive = true;
-
-        _rb.velocity = Vector2.zero;
-
-        var players = GameObject.FindGameObjectsWithTag("Player").OrderBy(p => p.transform.position.x).ToArray();
-
-        if (players.Length >= 2) {
-            GameObject target1 = players[UnityEngine.Random.Range(0, players.Length)];
-            GameObject target2;
-
-            do {
-                target2 = players[UnityEngine.Random.Range(0, players.Length)];
-            } while (target2 == target1);
-
-            yield return StartCoroutine(MoveTowardsTargets(new List<GameObject> { target1, target2 }));
-        }
-
-        _isModeActive = false;
     }
 
     private GameObject GetClosestPlayer() {
@@ -163,22 +176,31 @@ public class AIController : MonoBehaviour
         return closestPlayer;
     }
 
-    private IEnumerator MoveTowardsTargets(List<GameObject> targets) {
-        foreach (var target in targets) {
-            float timer = 0f;
-            while ((timer <= _modeDoublePenetrationLiveTime / 2f) && target != null) {
-                transform.position = new Vector3(target.transform.position.x, transform.position.y, transform.position.z);
-
-                timer += Time.deltaTime;
-                yield return new WaitForFixedUpdate();
-                Debug.Log("timer pen: " + timer + ", timer <= _modeDoublePen: " + (timer <= _modeDoublePenetrationLiveTime) + ", Live time: " + _modeDoublePenetrationLiveTime);
+    void MoveTowardsTargets(List<GameObject> targets) {
+        if (Time.time - _checkTime < _modeDoublePenetrationLiveTime / 2f) {
+            if (targets[0]) {
+                MoveToTarget(targets[0]);
             }
+        } else {
+            if (targets.Count < 2) {
+                _isModeActive = false;
+                return;
+            }
+
+            if (targets[1]) {
+                MoveToTarget(targets[1]);
+            } 
         }
     }
 
-    private bool isReachedBound(float direction) {
-        float leftBound = GetLeftBoundPosX();
-        float rightBound = GetRightBoundPosX();
+    void MoveToTarget(GameObject target) {
+        Vector3 targetPosition = new Vector3(target.transform.position.x, transform.position.y, transform.position.z);
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, _speed * Time.deltaTime);
+    }
+
+    private bool IsReachedBound(float direction) {
+        float leftBound = Utils.GetLeftBoundPlayerShipPosX();
+        float rightBound = Utils.GetRightBoundPlayerShipPosX();
 
         if (direction > 0) {
             return transform.position.x >= rightBound;
@@ -187,17 +209,21 @@ public class AIController : MonoBehaviour
         }
     }
 
-    private float GetRightBoundPosX() {
-        var playerShips = GameObject.FindGameObjectsWithTag("Player");
-        if (playerShips.Length == 0) return -Mathf.Infinity;
-        
-        return playerShips.Max(ship => ship.transform.position.x);
-    }
+    public OperatingModes GetRandomOperatingMode() {
+        List<OperatingModes> randList = new List<OperatingModes>();
 
-    private float GetLeftBoundPosX() {
-        var playerShips = GameObject.FindGameObjectsWithTag("Player");
-        if (playerShips.Length == 0) return Mathf.Infinity;
+        for (int i = 0; i < _pursuitProbability * 100; i++) {
+            randList.Add(OperatingModes.PURSUIT);
+        }
 
-        return playerShips.Min(ship => ship.transform.position.x);
+        for (int i = 0; i < _wholeLineProbability * 100; i++) {
+            randList.Add(OperatingModes.WHOLE_LINE);
+        }
+
+        for (int i = 0; i < _doublePenetrationProbability * 100; i++) {
+            randList.Add(OperatingModes.DOUBLE_PENETRATION);
+        }
+
+        return randList[UnityEngine.Random.Range(0, randList.Count)];
     }
 }

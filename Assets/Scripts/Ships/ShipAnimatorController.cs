@@ -35,6 +35,18 @@ public class ShipAnimatorController : MonoBehaviour
     }
 
     public void SetAnimatorIsDestroyedValue(bool value) {
+        PolygonCollider2D polygonCollider = GetComponent<PolygonCollider2D>();
+
+        if (polygonCollider != null){
+            Destroy(polygonCollider);
+        }
+
+        var skills = GetComponents<Skill>();
+
+        foreach(var skill in skills) {
+            skill.SetIsSkillActive(false);
+        }
+
         _animator.SetBool("isDestroyed", value);
     }
 
