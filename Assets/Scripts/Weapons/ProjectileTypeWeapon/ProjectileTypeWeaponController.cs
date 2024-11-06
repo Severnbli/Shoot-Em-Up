@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class ProjectileTypeWeaponController : WeaponController
 {
-    [SerializeField] private float _destroyDelayOutsideCamera = 1f; // Задержка уничтожения снаряда, когда он выходит за пределы камеры
-
     protected float _speed;
 
     protected override void FixedUpdate() {
@@ -12,7 +10,7 @@ public class ProjectileTypeWeaponController : WeaponController
         Vector3 viewportPosition = Camera.main.WorldToViewportPoint(transform.position);
 
         if (viewportPosition.y < 0 || viewportPosition.y > 1) {
-            Destroy(gameObject, _destroyDelayOutsideCamera);
+            ObjectPooling.PushObject(gameObject);
         }
     }
 
@@ -21,7 +19,8 @@ public class ProjectileTypeWeaponController : WeaponController
         base.OnTriggerEnter2D(collider);
 
         if (_isColliderChecked) {
-            Destroy(gameObject);
+            _isColliderChecked = false;
+            ObjectPooling.PushObject(gameObject);
         }
     }
 

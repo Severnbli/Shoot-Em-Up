@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4859441992164376112}
   m_Layer: 0
   m_Name: Bolt
-  m_TagString: Untagged
+  m_TagString: Bolt
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: -3468429259957684539, guid: fd0a60ec8af208b44b1f7df0140e4055, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -197,7 +197,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efec2a2fa86b88c4e97bfa0050b781b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damageAmount: 10
   _initialSound: {fileID: 1095795042375181246, guid: b1fa504555ad1dd4daa187c043b8870b, type: 3}
-  localScaleFactor: 1
-  _destroyDelayOutsideCamera: 1

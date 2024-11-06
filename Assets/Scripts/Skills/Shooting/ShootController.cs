@@ -28,7 +28,7 @@ public class ShootController : Skill
 
         _isUsingAllowed = false;
 
-        GameObject projectile = Instantiate(_projectile, _projectileStartTransform.position, Quaternion.identity);
+        GameObject projectile = ObjectPooling.PopObject(_projectile.tag, _projectileStartTransform.position);
 
         var weaponController = projectile.GetComponent<WeaponController>();
 

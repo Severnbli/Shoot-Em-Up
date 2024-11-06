@@ -5,6 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - Bolt
+  - Ray
+  - Racket
+  - Torpedo
+  - Asteroid
+  - Star
   layers:
   - Default
   - TransparentFX

@@ -7,6 +7,7 @@ public class CameraAnchor : MonoBehaviour
     [SerializeField] private float _minCameraSize = 5f;
     [SerializeField] private float _stepToIncrease = 0.1f;
     [SerializeField] private float _paddingToChangeSize = 0.05f;
+    [SerializeField] private float _paddinfToChangePivot = 1f;
     private GameObject _enemy;
     private GameObject[] _playerShips;
 
@@ -40,10 +41,10 @@ public class CameraAnchor : MonoBehaviour
         float leftBound = Utils.GetLeftBoundPlayerShipPosX();
         float rightBound = Utils.GetRightBoundPlayerShipPosX();
 
-        if (_enemy.transform.position.x < leftBound && leftBound != Mathf.Infinity) {
+        if (_enemy.transform.position.x < leftBound - _paddinfToChangePivot && leftBound != Mathf.Infinity) {
             sumPositionX += rightBound;
             count++;
-        } else if (_enemy.transform.position.x > rightBound && rightBound != -Mathf.Infinity) {
+        } else if (_enemy.transform.position.x > rightBound + _paddinfToChangePivot && rightBound != -Mathf.Infinity) {
             sumPositionX += leftBound;
             count++;
         } else {

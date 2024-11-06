@@ -364,6 +364,7 @@ MonoBehaviour:
   _minCameraSize: 5
   _stepToIncrease: 0.1
   _paddingToChangeSize: 0.1
+  _paddinfToChangePivot: 1
 --- !u!1 &1281429237
 GameObject:
   m_ObjectHideFlags: 0
@@ -454,6 +455,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1449810216}
+  - component: {fileID: 1449810217}
+  - component: {fileID: 1449810218}
   m_Layer: 0
   m_Name: LevelController
   m_TagString: Untagged
@@ -476,6 +479,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1449810217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1449810215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 946fa8d1280c7f74a8f06bb1d91d57bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _poolingReplicas:
+  - {fileID: 549261088877501598, guid: 6b11985a3eb1f4a4f8071ae256d6084d, type: 3}
+  - {fileID: 254690502540919475, guid: e683cbd4d1b61a141b54cfc63d708a32, type: 3}
+  - {fileID: 1338389515384092791, guid: b5d74635fdde114429193ae5d864e982, type: 3}
+  - {fileID: 4248496987543967653, guid: cc87df6477d115d409c9019beb0694f6, type: 3}
+  - {fileID: 1421865027907182708, guid: 27330bc807182124e8b5cb4c5e5e9b40, type: 3}
+  - {fileID: 2896643105820022048, guid: c46c0f7666d89394faf9989d87b53284, type: 3}
+  - {fileID: 1140171334691702026, guid: 22feacc68d138e64e98a1d7a0e829a06, type: 3}
+  - {fileID: 380881880318727801, guid: 5768a6e33739482489e93fb26a20dd0a, type: 3}
+--- !u!114 &1449810218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1449810215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fe7150c5de5243479a0ed27127eed6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _backgroundObjects:
+  - _entity: {fileID: 380881880318727801, guid: 5768a6e33739482489e93fb26a20dd0a, type: 3}
+    _totalCount: 100
+    _speed: 0.2
+    _scaleVariation: 0.5
+  - _entity: {fileID: 1338389515384092791, guid: b5d74635fdde114429193ae5d864e982, type: 3}
+    _totalCount: 3
+    _speed: 1
+    _scaleVariation: 0.3
+  _treshHold: 5
+  _cameraMovementFactor: 50
 --- !u!1 &2021023173
 GameObject:
   m_ObjectHideFlags: 0

@@ -111,7 +111,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 3
   m_Sprite: {fileID: -5841503337032551386, guid: f05a55b683a43a346ad37668d4b07d8e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -288,10 +288,13 @@ MonoBehaviour:
     _key: 0
     _handlerType: 0
   _isKeyActive: 0
+  _isSkillActive: 1
   _delay: 1
   _energyWaste: 0
   _projectile: {fileID: 549261088877501598, guid: 6b11985a3eb1f4a4f8071ae256d6084d, type: 3}
   _speed: 4
+  _damageAmount: 10
+  _localScaleFactor: 1
   _projectileStartTransform: {fileID: 6218909314515699509}
   _targetsTags:
   - Player

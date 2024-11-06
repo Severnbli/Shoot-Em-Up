@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -125,5 +126,28 @@ public class Utils {
             to.volume = from.volume;
             to.outputAudioMixerGroup = from.outputAudioMixerGroup;
         }
+    }
+
+    public static Dictionary<string, Vector3> CalculateMainCameraBounds() {
+        var bounds = new Dictionary<string, Vector3>();
+
+        float height = 2f * Camera.main.orthographicSize;
+        float width = height * Camera.main.aspect;
+
+        bounds["bottomLeft"] = Camera.main.transform.position - new Vector3(width / 2f, height / 2f, 0);
+        bounds["topRight"] = Camera.main.transform.position + new Vector3(width / 2f, height / 2f, 0);
+        bounds["topLeft"] = new Vector3(bounds["bottomLeft"].x, bounds["topRight"].y, 0);
+        bounds["bottomRight"] = new Vector3(bounds["topRight"].x, bounds["bottomLeft"].y, 0);
+
+        return bounds;
+    }
+
+    public static Quaternion GetRandomZRotation()
+    {
+        float randomAngle = UnityEngine.Random.Range(0f, 360f);
+        
+        Quaternion randomRotation = Quaternion.Euler(0f, 0f, randomAngle);
+        
+        return randomRotation;
     }
 }

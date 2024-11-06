@@ -27,17 +27,7 @@ public class WeaponController : MonoBehaviour
         }
     }
 
-    protected virtual void Start() {
-        if (_initialSound) {
-            gameObject.AddComponent<AudioSource>();
-
-            AudioSource source = GetComponent<AudioSource>();
-
-            Utils.CopyAudioSourceProperties(_initialSound, source);
-
-            source.Play();
-        }
-    }
+    protected virtual void Start() {}
 
     protected virtual void FixedUpdate() {}
 
@@ -71,5 +61,21 @@ public class WeaponController : MonoBehaviour
 
     public void SetLocalScaleFactor(float localScaleFactor) {
         transform.localScale = transform.localScale * localScaleFactor;
+    }
+
+    public void PlayMusic() {
+        if (_initialSound) {
+            AudioSource source = GetComponent<AudioSource>();
+
+            if (source == null) {
+                gameObject.AddComponent<AudioSource>();
+
+                source = GetComponent<AudioSource>();
+
+                Utils.CopyAudioSourceProperties(_initialSound, source);
+            }
+
+            source.Play();
+        }
     }
 }
