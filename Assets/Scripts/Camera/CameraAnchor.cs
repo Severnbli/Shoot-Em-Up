@@ -41,10 +41,10 @@ public class CameraAnchor : MonoBehaviour
         float leftBound = Utils.GetLeftBoundPlayerShipPosX();
         float rightBound = Utils.GetRightBoundPlayerShipPosX();
 
-        if (_enemy.transform.position.x < leftBound - _paddinfToChangePivot && leftBound != Mathf.Infinity) {
+        if (_enemy && _enemy.transform.position.x < leftBound - _paddinfToChangePivot && leftBound != Mathf.Infinity) {
             sumPositionX += rightBound;
             count++;
-        } else if (_enemy.transform.position.x > rightBound + _paddinfToChangePivot && rightBound != -Mathf.Infinity) {
+        } else if (_enemy && _enemy.transform.position.x > rightBound + _paddinfToChangePivot && rightBound != -Mathf.Infinity) {
             sumPositionX += leftBound;
             count++;
         } else {

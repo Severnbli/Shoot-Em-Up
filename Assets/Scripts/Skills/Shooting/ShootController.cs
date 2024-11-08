@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -11,7 +10,9 @@ public class ShootController : Skill
     [SerializeField] private Transform _projectileStartTransform; // Начальное положение пули
     [SerializeField] private string[] _targetsTags;
 
-    void FixedUpdate() {
+    protected override void Update() {
+        base.Update();
+
         if(_isKeyActive) {
             if (_inputKey.IsEventTrigger()) {
                 if (_isUsingAllowed && _isSkillActive) {
@@ -26,6 +27,12 @@ public class ShootController : Skill
             yield break;
         }
 
+        if (_energyController) {
+            if (!_energyController.IsEnoughEnergyAndWasteIfEnough(_energyWaste)) {
+                yield break;
+            }
+        }
+
         _isUsingAllowed = false;
 
         GameObject projectile = ObjectPooling.PopObject(_projectile.tag, _projectileStartTransform.position);
@@ -33,6 +40,8 @@ public class ShootController : Skill
         var weaponController = projectile.GetComponent<WeaponController>();
 
         if (weaponController) {
+            weaponController.PlayMusic();
+            
             foreach (var target in _targetsTags) {
                 weaponController.AddTargetTag(target);
             }

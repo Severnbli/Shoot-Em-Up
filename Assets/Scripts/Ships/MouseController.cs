@@ -6,15 +6,20 @@ using UnityEngine;
 * Этот класс призван обеспечить возможность перемещения для сил игрока
 * Для правильной работы этого скрипта у объекта должен быть компонент Rigidbody2D
 */
+
 public class MouseController : MonoBehaviour
 {
+    [SerializeField] private List<string> _movingObjectsTags;
     [SerializeField] private float _maxSpeed = 0; // Скорость перемещения
     [SerializeField] private ModificationTypes _modificationType;
     [SerializeField] private int _quantityOfCursorZones = 9; // Количество зон для курсора. Минимально 3
     [SerializeField] private int _quantityOfCenterZones = 3; // Количество зон для бездействия. Минимально 1
     [SerializeField] private float _degreeGround = 2f; // Основание степени (для ModificationTypes.DEGREE)
-
-    private Rigidbody2D _rb;
+    [SerializeField] protected bool _isConnectToEnergySystem = true;
+    [SerializeField] private float _energyWaste;
+    
+    protected EnergyEntityController _energyController;
+    private List<Rigidbody2D> _rbs = new List<Rigidbody2D>();
 
     private List<int> _centerZonesSpecificValues; // Специальные значения центральных зон
     [SerializeField] private float _increaseFactorForSpeed = 10f;
@@ -31,10 +36,28 @@ public class MouseController : MonoBehaviour
             Debug.LogError(gameObject.name + " component: ShipMouseController: zones values!");
         }
 
-        _rb = GetComponent<Rigidbody2D>();
+        if (_isConnectToEnergySystem) {    
+            _energyController = GetComponent<EnergyEntityController>();
 
-        if (_rb == null) {
-            Debug.LogError(gameObject.name + " has no component Rigidbody2D!");
+            if (!_energyController) {
+                Debug.LogError($"Mouse Controller: {gameObject.name} has no component Energy Entity Controller!");
+            }
+        }
+    }
+
+    void Start() {
+        foreach (var movingObjectTag in _movingObjectsTags) {
+            var movingObjects = GameObject.FindGameObjectsWithTag(movingObjectTag);
+
+            foreach (var movingObject in movingObjects) {
+                var rb = movingObject.GetComponent<Rigidbody2D>();
+
+                if (rb == null) {
+                    Debug.LogWarning($"Mouse Controller: {movingObject.name} has no component Rigidbody2D!");
+                } else {
+                    _rbs.Add(rb);
+                }
+            }
         }
     }
 
@@ -75,7 +98,7 @@ public class MouseController : MonoBehaviour
     private void ProcessSpecificValue(int value) {
         foreach (int val in _centerZonesSpecificValues) {
             if (value == val) { // Значение попадает в центральные значения
-                _rb.velocity = Vector2.zero; // Прекратить движение
+                SetVelocity(0); // Прекратить движение
                 return;
             }
         }
@@ -83,12 +106,17 @@ public class MouseController : MonoBehaviour
         int maximumCenterValue = _centerZonesSpecificValues.Max();
 
         // Максимальный коэфициент воздействия
-        int maximumInfluenceValue = (_quantityOfCursorZones - _quantityOfCenterZones) / 2; 
+        int maximumInfluenceValue = (_quantityOfCursorZones - _quantityOfCenterZones) / 2;
 
         if (value > maximumCenterValue) { // Правее центральных
             value -= maximumCenterValue;
         } else if (value < maximumCenterValue) { // Левее центральных
             value = value - maximumInfluenceValue - 1;
+        }
+
+        if (_energyController && !_energyController.IsEnoughEnergyAndWasteIfEnough(_energyWaste * Mathf.Abs(value) / maximumInfluenceValue)) {
+            SetVelocity(0);
+            return;
         }
 
         switch(_modificationType) {
@@ -143,6 +171,10 @@ public class MouseController : MonoBehaviour
     }
 
     private void SetVelocity(float velocityX) {
-        _rb.velocity = new Vector2(velocityX * _increaseFactorForSpeed * Time.deltaTime, 0);
+        foreach (var rb in _rbs) {
+            if (rb) {
+                rb.velocity = new Vector2(velocityX * _increaseFactorForSpeed * Time.deltaTime, 0);
+            }
+        }
     }
 }

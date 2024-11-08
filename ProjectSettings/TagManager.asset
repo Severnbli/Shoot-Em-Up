@@ -11,6 +11,11 @@ TagManager:
   - Torpedo
   - Asteroid
   - Star
+  - Explosion
+  - DeathBall
+  - Fireball
+  - Spawner
+  - MousePlayerController
   layers:
   - Default
   - TransparentFX

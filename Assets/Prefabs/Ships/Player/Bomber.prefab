@@ -44,10 +44,10 @@ GameObject:
   - component: {fileID: 8397181093103757822}
   - component: {fileID: 3566791387186013551}
   - component: {fileID: 231679201838396428}
-  - component: {fileID: 1221478998484726990}
   - component: {fileID: 2930814309890149394}
   - component: {fileID: -8077588941255847411}
   - component: {fileID: 158749485783587019}
+  - component: {fileID: -4410136511923455840}
   m_Layer: 0
   m_Name: Bomber
   m_TagString: Player
@@ -184,24 +184,6 @@ Rigidbody2D:
   m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!114 &1221478998484726990
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2380015652854407015}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3c7bf4c3471e554ca267e8b9e0dbe14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _maxSpeed: 10
-  _modificationType: 1
-  _quantityOfCursorZones: 9
-  _quantityOfCenterZones: 3
-  _degreeGround: 2
-  _increaseFactorForSpeed: 10
 --- !u!60 &2930814309890149394
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -246,15 +228,34 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.08, y: 0.14}
-      - {x: -0.08, y: 0.13}
-      - {x: -0.16, y: 0.02}
-      - {x: -0.16, y: -0.14999999}
-      - {x: -0.14, y: -0.16}
-      - {x: 0.12, y: -0.16}
-      - {x: 0.16, y: -0.14999999}
-      - {x: 0.16, y: 0.02}
-      - {x: 0.08, y: 0.14}
+    - - {x: 0.02937802, y: 0.10562871}
+      - {x: 0.0012570214, y: 0.12351385}
+      - {x: -0.030015511, y: 0.105441414}
+      - {x: -0.05006503, y: 0.11980826}
+      - {x: -0.05019919, y: 0.07509003}
+      - {x: -0.14987619, y: -0.018139986}
+      - {x: -0.15017605, y: -0.10441559}
+      - {x: -0.08073359, y: -0.07097269}
+      - {x: -0.06643077, y: -0.09359556}
+      - {x: -0.08005191, y: -0.12992443}
+      - {x: -0.059483886, y: -0.13052729}
+      - {x: -0.038261138, y: -0.108848594}
+      - {x: -0.018067164, y: -0.10937226}
+      - {x: -0.02975051, y: -0.14944315}
+      - {x: 0.0308222, y: -0.14974605}
+      - {x: 0.020937365, y: -0.109821364}
+      - {x: 0.04080113, y: -0.109428264}
+      - {x: 0.047772966, y: -0.12037323}
+      - {x: 0.056072954, y: -0.12956928}
+      - {x: 0.08225957, y: -0.12938358}
+      - {x: 0.07177067, y: -0.10043856}
+      - {x: 0.06706158, y: -0.07904881}
+      - {x: 0.09510075, y: -0.07885927}
+      - {x: 0.14946206, y: -0.107933946}
+      - {x: 0.14932297, y: -0.025300067}
+      - {x: 0.14932291, y: -0.015850903}
+      - {x: 0.05065266, y: 0.07817139}
+      - {x: 0.048089813, y: 0.11695102}
   m_UseDelaunayMesh: 0
 --- !u!114 &-8077588941255847411
 MonoBehaviour:
@@ -271,6 +272,9 @@ MonoBehaviour:
   _healthAmount: 100
   _armorAmount: 0
   _isHealthBoundedOnTop: 1
+  _isHealthCanRestore: 0
+  _restoreHealthCount: 0
+  _restoreHealthDelay: 0
 --- !u!114 &158749485783587019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,6 +293,19 @@ MonoBehaviour:
   _isKeyActive: 1
   _isSkillActive: 1
   _delay: 2
-  _energyWaste: 0
+  _isConnectToEnergySystem: 1
+  _energyWaste: 2
   _armorAddAmount: 10
   _setupType: 1
+--- !u!114 &-4410136511923455840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2380015652854407015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb5c8a32bd6000142a0787fb334f1a49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

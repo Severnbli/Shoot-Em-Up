@@ -31,8 +31,10 @@ public class WeaponController : MonoBehaviour
 
     protected virtual void FixedUpdate() {}
 
-    protected virtual void OnTriggerEnter2D(Collider2D  collider) {
+    protected virtual void OnTriggerEnter2D(Collider2D collider) {
         if (_targetsTags.Contains(collider.gameObject.tag)) {
+            ObjectPooling.PopObject("Explosion", collider.transform.position)?.GetComponent<ExplosionController>()?.PlayMusic();
+
             HealthController healthController = collider.gameObject.GetComponent<HealthController>();
 
             if (healthController) {
@@ -77,5 +79,9 @@ public class WeaponController : MonoBehaviour
 
             source.Play();
         }
+    }
+
+    public List<string> GetTargetsTags() {
+        return _targetsTags;
     }
 }

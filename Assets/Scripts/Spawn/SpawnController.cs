@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnController : MonoBehaviour
@@ -11,65 +12,105 @@ public class SpawnController : MonoBehaviour
     
     [SerializeField] private float _centerInterval; // Центральный интервал (используется при симметричном спавне (нечётное число объектов))
     [SerializeField] private Vector3 _spawnStartPosition; // Центральное положение области спавна
-
+    [SerializeField] private bool _isRealignmentModeOn = true;
+    
     private Vector3 _intervalVector; // Интервал в векторной форме, для уменьшения копипаста
     private Vector3 _centerIntervalVector; // Центральный интервал в векторной форме, -//-
+    private List<GameObject> _activeObjects = new List<GameObject>();
 
     void Awake() {
         _quantity = Math.Abs(_quantity);
         
         if (_quantity > 0) {
-            _interval = Math.Abs(_interval);
-        _centerInterval = Math.Abs(_centerInterval);
-        
-        _intervalVector = new Vector3(_interval, 0, 0);
-        _centerIntervalVector = new Vector3(_centerInterval, 0, 0);
+            CountIntervals();
 
-        if (_quantity % 2 == 0) {
-            SymmetricalSpawn();
-        } else {
-            AsymmetricalSpawn();
-        }
+            SpawnObjects();
+
+            transform.position = _spawnStartPosition;
+
+            AlignObjects();
         }
     }
 
-    void SymmetricalSpawn() {
-        int halfQuantity = _quantity / 2 - 1;
+    void FixedUpdate() {
+        if (_isRealignmentModeOn) {
+            for (int i = 0; i < _activeObjects.Count; i++) {
+                if (_activeObjects[i] == null) {
+                    _activeObjects.RemoveAt(i);
+                    i--;
 
-        // Берём центр и половину от центрального интервала, а затем перемещаемся в левое положение
-        Vector3 position = _spawnStartPosition - _centerIntervalVector / 2f - _intervalVector * halfQuantity; 
+                    if (_activeObjects.Count > 0) {
+                        AlignObjects();
+                    }
+                }
+            }
+        }
+    }
 
-        for (int i = 0; i < _quantity; i++) {
-            SpawnObject(position, i);
+    void AlignObjects() {
+        int quantity = _activeObjects.Count;
 
-            if (halfQuantity == i) {
-                position = _spawnStartPosition + _centerIntervalVector / 2f;
-            } else {
+        if (quantity <= 0) {
+            return;
+        }
+        
+        if (quantity % 2 == 0) {
+            int halfQuantity = quantity / 2 - 1;
+
+            // Берём центр и половину от центрального интервала, а затем перемещаемся в левое положение
+            Vector3 position = transform.position - _centerIntervalVector / 2f - _intervalVector * halfQuantity; 
+
+            for (int i = 0; i < quantity; i++) {
+                _activeObjects[i].transform.position = position;
+                if (halfQuantity == i) {
+                    position = transform.position + _centerIntervalVector / 2f;
+                } else {
+                    position += _intervalVector;
+                }
+            }
+        } else {
+            // Двигаемся в левое положение
+            Vector3 position = transform.position - _intervalVector * (quantity / 2);
+
+            for (int i = 0; i < quantity; i++) {
+                _activeObjects[i].transform.position = position;
+
                 position += _intervalVector;
             }
         }
     }
 
-    void AsymmetricalSpawn() {
-        // Двигаемся в левое положение
-        Vector3 position = _spawnStartPosition - _intervalVector * (_quantity / 2);
-
+    void SpawnObjects() {
         for (int i = 0; i < _quantity; i++) {
-            SpawnObject(position, i);
+            GameObject obj = Instantiate(_object, _spawnStartPosition, Quaternion.identity);
 
-            position += _intervalVector;
+            int index = obj.name.IndexOf("(Clone)");
+
+            string newName = obj.name.Substring(0, index);
+            newName += obj.name.Substring(index + "(Clone)".Length);
+
+            obj.name = newName + "_" + i.ToString();
+
+            _activeObjects.Add(obj);
         }
     }
 
-    void SpawnObject(Vector3 position, int number) {
-        GameObject obj = Instantiate(_object, position, Quaternion.identity);
+    public void Expansion(float expansionParameter) {
+        if (expansionParameter != 0) {
+            _interval += expansionParameter;
+            _centerInterval += expansionParameter;
 
-        int index = obj.name.IndexOf("(Clone)");
+            CountIntervals();
 
-        String newName = obj.name.Substring(0, index);
-        newName += obj.name.Substring(index + "(Clone)".Length) ;
+            AlignObjects();
+        }
+    }
 
-        obj.name = newName + "_" + number.ToString();
-
+    private void CountIntervals() {
+        _interval = Math.Abs(_interval);
+        _centerInterval = Math.Abs(_centerInterval);
+        
+        _intervalVector = new Vector3(_interval, 0, 0);
+        _centerIntervalVector = new Vector3(_centerInterval, 0, 0);       
     }
 }

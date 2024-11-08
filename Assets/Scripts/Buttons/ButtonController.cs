@@ -1,10 +1,13 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class ButtonController : MonoBehaviour
 {
-    public void PlayButton() {
+    [SerializeField] LevelChanger _levelChanger;
 
+    public void PlayButton() {
+        PlayerPrefs.SetString("nextScene", "Level");
+
+        _levelChanger.ChangeLevel();
     }
 
     public void SettingsButton() {

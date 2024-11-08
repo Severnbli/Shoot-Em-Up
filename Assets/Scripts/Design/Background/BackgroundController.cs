@@ -11,7 +11,6 @@ public class BackgroundController : MonoBehaviour
     private Vector3 _cameraMovement;
     private Dictionary<string, Vector3> _cameraBounds;
     
-
     private void Start()
     {
         _lastCameraPosition = Camera.main.transform.position;
@@ -82,7 +81,7 @@ public class BackgroundController : MonoBehaviour
     }
 
     private bool IsInBounds(GameObject entity) {
-        return entity.transform.position.y > _cameraBounds["bottomLeft"].y &&
+        return entity.transform.position.y > _cameraBounds["bottomLeft"].y - _treshHold &&
                 entity.transform.position.x > _cameraBounds["bottomLeft"].x - _treshHold &&
                 entity.transform.position.x < _cameraBounds["bottomRight"].x + _treshHold;
     }

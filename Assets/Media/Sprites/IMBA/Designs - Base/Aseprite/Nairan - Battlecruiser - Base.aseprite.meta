@@ -134,7 +134,25 @@ ScriptedImporter:
       height: 85
     spriteID: 640f5a18aec3353488aa165b01bc1a8f
     spriteBone: []
-    spriteOutline: []
+    spriteOutline:
+    - outline:
+      - {x: 20, y: -22.5}
+      - {x: 20, y: -36.5}
+      - {x: 13, y: -36.5}
+      - {x: -20, y: -36.5}
+      - {x: -20, y: -22.5}
+      - {x: -29, y: -34.5}
+      - {x: -29, y: -12.5}
+      - {x: -22, y: -1.5}
+      - {x: -13, y: 40.5}
+      - {x: -6, y: 40.5}
+      - {x: -6, y: 20.5}
+      - {x: 6, y: 20.5}
+      - {x: 6, y: 40.5}
+      - {x: 13, y: 40.5}
+      - {x: 22, y: -0.5}
+      - {x: 29, y: -12.5}
+      - {x: 29, y: -34.5}
     vertices: []
     spritePhysicsOutline: []
     indices: 

@@ -13,11 +13,11 @@ GameObject:
   - component: {fileID: 968968644190440318}
   - component: {fileID: -1380323686241163814}
   - component: {fileID: 8289727854245080193}
-  - component: {fileID: 6300684331139475263}
   - component: {fileID: -6591781888955577915}
   - component: {fileID: 2499420065751470043}
   - component: {fileID: 8819706789616908011}
   - component: {fileID: 5493003049072373719}
+  - component: {fileID: 3159774725271116859}
   m_Layer: 0
   m_Name: Frigate
   m_TagString: Player
@@ -154,24 +154,6 @@ Rigidbody2D:
   m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!114 &6300684331139475263
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 68594363858751482}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3c7bf4c3471e554ca267e8b9e0dbe14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _maxSpeed: 10
-  _modificationType: 1
-  _quantityOfCursorZones: 9
-  _quantityOfCenterZones: 3
-  _degreeGround: 2
-  _increaseFactorForSpeed: 10
 --- !u!60 &-6591781888955577915
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -216,14 +198,36 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.11, y: 0.22999999}
-      - {x: -0.21, y: 0.01}
-      - {x: -0.21, y: -0.17999999}
-      - {x: -0.17999999, y: -0.19}
-      - {x: 0.21, y: -0.19}
-      - {x: 0.21, y: 0.03}
-      - {x: 0.19999999, y: 0.089999996}
-      - {x: 0.11, y: 0.22999999}
+    - - {x: -0.07791574, y: 0.20666596}
+      - {x: -0.08441626, y: 0.095537685}
+      - {x: -0.103449784, y: 0.05791565}
+      - {x: -0.13639739, y: 0.044315945}
+      - {x: -0.20031245, y: -0.067842215}
+      - {x: -0.19999938, y: -0.13647133}
+      - {x: -0.12763467, y: -0.06605359}
+      - {x: -0.11597363, y: -0.085741706}
+      - {x: -0.08507868, y: -0.068320796}
+      - {x: -0.052091222, y: -0.099252775}
+      - {x: -0.100014806, y: -0.16246599}
+      - {x: -0.06703822, y: -0.16241056}
+      - {x: -0.04666519, y: -0.13734117}
+      - {x: -0.022475267, y: -0.13771588}
+      - {x: -0.030912265, y: -0.17825931}
+      - {x: 0.027305182, y: -0.17896874}
+      - {x: 0.015947439, y: -0.13867919}
+      - {x: 0.052756377, y: -0.13932589}
+      - {x: 0.061187707, y: -0.16813377}
+      - {x: 0.10088782, y: -0.1685067}
+      - {x: 0.055672504, y: -0.10203471}
+      - {x: 0.0828879, y: -0.07551724}
+      - {x: 0.11505821, y: -0.08958072}
+      - {x: 0.13444936, y: -0.07040192}
+      - {x: 0.20015441, y: -0.1407481}
+      - {x: 0.19671942, y: -0.06760863}
+      - {x: 0.13780548, y: 0.044956084}
+      - {x: 0.10357677, y: 0.060671315}
+      - {x: 0.088086285, y: 0.086932674}
+      - {x: 0.079860285, y: 0.20763822}
   m_UseDelaunayMesh: 0
 --- !u!114 &2499420065751470043
 MonoBehaviour:
@@ -240,6 +244,9 @@ MonoBehaviour:
   _healthAmount: 100
   _armorAmount: 0
   _isHealthBoundedOnTop: 1
+  _isHealthCanRestore: 0
+  _restoreHealthCount: 0
+  _restoreHealthDelay: 0
 --- !u!114 &8819706789616908011
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,6 +265,7 @@ MonoBehaviour:
   _isKeyActive: 1
   _isSkillActive: 1
   _delay: 0
+  _isConnectToEnergySystem: 1
   _energyWaste: 0
   _projectile: {fileID: 0}
   _speed: 0
@@ -283,14 +291,27 @@ MonoBehaviour:
   _isKeyActive: 1
   _isSkillActive: 1
   _delay: 2
-  _energyWaste: 0
-  _projectile: {fileID: 254690502540919475, guid: e683cbd4d1b61a141b54cfc63d708a32, type: 3}
+  _isConnectToEnergySystem: 1
+  _energyWaste: 5
+  _projectile: {fileID: 7359522011428763970, guid: f27c9d16db42c0b4f96d4a9e9a427aef, type: 3}
   _speed: 4
   _damageAmount: 10
   _localScaleFactor: 1
   _projectileStartTransform: {fileID: 5211587711664900265}
   _targetsTags:
   - Enemy
+--- !u!114 &3159774725271116859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 68594363858751482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb5c8a32bd6000142a0787fb334f1a49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4963939348220507654
 GameObject:
   m_ObjectHideFlags: 0

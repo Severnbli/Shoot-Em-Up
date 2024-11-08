@@ -7,9 +7,21 @@ public class Skill : MonoBehaviour
     [SerializeField] protected bool _isKeyActive = true;
     [SerializeField] protected bool _isSkillActive = true;
     [SerializeField] protected float _delay;
+    [SerializeField] protected bool _isConnectToEnergySystem = true;
     [SerializeField] protected float _energyWaste;
     protected bool _isRepeatUsing = false;
     protected bool _isUsingAllowed = true;
+    protected EnergyEntityController _energyController;
+
+    protected virtual void Awake() {
+        if (_isConnectToEnergySystem) {    
+            _energyController = GetComponent<EnergyEntityController>();
+
+            if (!_energyController) {
+                Debug.LogError($"Skill: {gameObject.name} has no component Energy Entity Controller!");
+            }
+        }
+    }
 
     public virtual IEnumerator UseSkill() {
         yield return null;
@@ -20,6 +32,8 @@ public class Skill : MonoBehaviour
             yield return UseSkill();
         }
     }
+
+    protected virtual void Update() {}
 
     public void StartRepeatUsing() {
         if (!_isRepeatUsing) {

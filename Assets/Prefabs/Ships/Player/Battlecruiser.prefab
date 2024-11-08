@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: 2121420009756943703}
   - component: {fileID: -758462332510919848}
   - component: {fileID: 4440965320575042245}
-  - component: {fileID: 982131101140176602}
   - component: {fileID: -6485178939901362804}
   - component: {fileID: 8025504612779001402}
   - component: {fileID: -4657944058569157010}
+  - component: {fileID: 4666143992734680119}
   m_Layer: 0
   m_Name: Battlecruiser
   m_TagString: Player
@@ -153,24 +153,6 @@ Rigidbody2D:
   m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!114 &982131101140176602
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 20253142951584349}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3c7bf4c3471e554ca267e8b9e0dbe14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _maxSpeed: 10
-  _modificationType: 1
-  _quantityOfCursorZones: 9
-  _quantityOfCenterZones: 3
-  _degreeGround: 2
-  _increaseFactorForSpeed: 10
 --- !u!60 &-6485178939901362804
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -215,18 +197,23 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.19999999, y: 0.42999998}
-      - {x: 0.17, y: 0.48999998}
-      - {x: -0.17, y: 0.48999998}
-      - {x: -0.19, y: 0.42999998}
-      - {x: -0.21, y: 0.34}
-      - {x: -0.31, y: 0.01}
-      - {x: -0.31, y: -0.35}
-      - {x: -0.29999998, y: -0.35999998}
-      - {x: 0.29999998, y: -0.35999998}
-      - {x: 0.31, y: -0.35}
-      - {x: 0.31, y: 0}
-      - {x: 0.24, y: 0.19999999}
+    - - {x: 0.20660418, y: 0.042991757}
+      - {x: 0.1172633, y: 0.46271947}
+      - {x: 0.075632155, y: 0.46245116}
+      - {x: 0.07373756, y: 0.26268846}
+      - {x: -0.0730983, y: 0.26195535}
+      - {x: -0.073140666, y: 0.45960155}
+      - {x: -0.12021381, y: 0.46021223}
+      - {x: -0.20644768, y: 0.04930147}
+      - {x: -0.27650267, y: -0.05699473}
+      - {x: -0.27608383, y: -0.22898084}
+      - {x: -0.18438488, y: -0.1131873}
+      - {x: -0.18451789, y: -0.28520334}
+      - {x: 0.038472295, y: -0.2873534}
+      - {x: 0.18509361, y: -0.2877986}
+      - {x: 0.1861769, y: -0.118403055}
+      - {x: 0.27515137, y: -0.23522294}
+      - {x: 0.27167135, y: -0.06416947}
   m_UseDelaunayMesh: 0
 --- !u!114 &8025504612779001402
 MonoBehaviour:
@@ -243,6 +230,9 @@ MonoBehaviour:
   _healthAmount: 100
   _armorAmount: 0
   _isHealthBoundedOnTop: 1
+  _isHealthCanRestore: 0
+  _restoreHealthCount: 0
+  _restoreHealthDelay: 0
 --- !u!114 &-4657944058569157010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -261,14 +251,27 @@ MonoBehaviour:
   _isKeyActive: 1
   _isSkillActive: 1
   _delay: 10
-  _energyWaste: 0
-  _projectile: {fileID: 254690502540919475, guid: e683cbd4d1b61a141b54cfc63d708a32, type: 3}
+  _isConnectToEnergySystem: 1
+  _energyWaste: 10
+  _projectile: {fileID: 5188141582818108119, guid: d5dc59c45e4027943a6f48e65fdab4d2, type: 3}
   _speed: 4
   _damageAmount: 20
-  _localScaleFactor: 2
+  _localScaleFactor: 1
   _projectileStartTransform: {fileID: 2885414067086352196}
   _targetsTags:
   - Enemy
+--- !u!114 &4666143992734680119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 20253142951584349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb5c8a32bd6000142a0787fb334f1a49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9116827202503633291
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,25 +7,37 @@ public class ArmorController : Skill
     [SerializeField] private ArmorSetupType _setupType = ArmorSetupType.SET; 
 
     public enum ArmorSetupType {
-        ADD,
-        SET
+        ADD, // Постепенное добавление брони
+        SET // Установка брони. При попадании сразу снимается
     }
 
     private HealthController _healthController;
 
-    void Awake() {
+    protected override void Awake() {
+        base.Awake();
+
         _healthController = GetComponent<HealthController>();
 
         if (_healthController == null) {
             Debug.LogWarning($"{gameObject.name} has no Health Controller component!");
+        } else {
+            _healthController.SetArmorSetupType(_setupType);
         }
     }
 
-    void FixedUpdate() {
+    protected override void Update() {
+        base.Update();
+
         if (_isKeyActive) {
             if (_inputKey.IsEventTrigger()) {
                 if (_isUsingAllowed && _isSkillActive) {
                     StartCoroutine(UseSkill());
+                }
+            }
+
+            if (_setupType == ArmorSetupType.SET && Input.GetKeyUp(_inputKey.GetKey())) {
+                if (_healthController) {
+                    _healthController.SetArmor(0);
                 }
             }
         }
@@ -34,6 +46,12 @@ public class ArmorController : Skill
     public override IEnumerator UseSkill(){
         if (!_isSkillActive) {
             yield break;
+        }
+
+        if (_energyController) {
+            if (!_energyController.IsEnoughEnergyAndWasteIfEnough(_energyWaste)) {
+                yield break;
+            }
         }
 
         _isUsingAllowed = false;

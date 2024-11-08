@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 7012167370847650186}
   - component: {fileID: 811313152566393064}
   - component: {fileID: -3527679736115240121}
-  - component: {fileID: -7240072123955662450}
   - component: {fileID: 4859441992164376112}
+  - component: {fileID: 3156280013509757014}
   m_Layer: 0
   m_Name: Bolt
   m_TagString: Bolt
@@ -136,7 +136,20 @@ Rigidbody2D:
   m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!60 &-7240072123955662450
+--- !u!114 &4859441992164376112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 549261088877501598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efec2a2fa86b88c4e97bfa0050b781b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _initialSound: {fileID: 1095795042375181246, guid: b1fa504555ad1dd4daa187c043b8870b, type: 3}
+--- !u!60 &3156280013509757014
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -180,21 +193,14 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.024999999, y: 0.044999998}
-      - {x: -0.024999999, y: -0.035}
-      - {x: 0.024999999, y: -0.035}
-      - {x: 0.024999999, y: 0.044999998}
+    - - {x: -0.0058445204, y: 0.045751195}
+      - {x: -0.025958337, y: 0.005248839}
+      - {x: -0.025396049, y: -0.015515966}
+      - {x: -0.006194366, y: -0.016081706}
+      - {x: -0.006595716, y: -0.035751183}
+      - {x: 0.005648993, y: -0.03576473}
+      - {x: 0.0061556045, y: -0.017089117}
+      - {x: 0.025375595, y: -0.01697133}
+      - {x: 0.025655337, y: 0.004320048}
+      - {x: 0.0054689236, y: 0.04575119}
   m_UseDelaunayMesh: 0
---- !u!114 &4859441992164376112
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 549261088877501598}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efec2a2fa86b88c4e97bfa0050b781b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _initialSound: {fileID: 1095795042375181246, guid: b1fa504555ad1dd4daa187c043b8870b, type: 3}
