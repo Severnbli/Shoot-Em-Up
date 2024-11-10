@@ -9,6 +9,7 @@ public class ShootController : Skill
     [SerializeField] private float _localScaleFactor = 1f;
     [SerializeField] private Transform _projectileStartTransform; // Начальное положение пули
     [SerializeField] private string[] _targetsTags;
+    [SerializeField] private bool _isProjectileHasHorizontalMovement = true; 
 
     protected override void Update() {
         base.Update();
@@ -48,7 +49,15 @@ public class ShootController : Skill
 
             weaponController.SetStartTransform(_projectileStartTransform);
             
-            projectile.GetComponent<ProjectileTypeWeaponController>()?.SetSpeed(_speed);
+            var projectileController = projectile.GetComponent<ProjectileTypeWeaponController>();
+
+            if (projectileController) {
+                projectileController.SetSpeed(_speed);
+
+                if (_isProjectileHasHorizontalMovement) {
+                    projectileController.SetVelocityX(_rb.velocity.x);
+                }
+            }
 
             weaponController.SetActualScale();
             weaponController.SetPhysics();
@@ -58,5 +67,17 @@ public class ShootController : Skill
 
         yield return new WaitForSeconds(_delay);
         _isUsingAllowed = true;
+    }
+
+    public void SetSpeed(float speed) {
+        _speed = speed;
+    }
+
+    public void SetDelay(float delay) {
+        _delay = delay;
+    }
+
+    public void SetProjectile(GameObject projectile) {
+        _projectile = projectile;
     }
 }

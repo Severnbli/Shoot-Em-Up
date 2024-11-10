@@ -21,7 +21,7 @@ public class CameraAnchor : MonoBehaviour
         _playerShips = GameObject.FindGameObjectsWithTag("Player");
     }
 
-    void FixedUpdate()
+    void LateUpdate()
     {
         MoveCamera();
         AdjustCameraSize();

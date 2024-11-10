@@ -6,6 +6,7 @@ public class ExpansionController : MonoBehaviour
     [SerializeField] private List<SpawnController> _spawnControllers;
     [SerializeField] private string _scrollAxis = "Mouse ScrollWheel";
     [SerializeField] private float _maxExpansion;
+    [SerializeField] private float _minExpansion = 0;
     [SerializeField] private float _expansionStep;
 
     private float _nowExpansion = 0;
@@ -21,7 +22,7 @@ public class ExpansionController : MonoBehaviour
                 _nowExpansion += _expansionStep;
             }
         } else if (scroll < 0) {
-            if (_nowExpansion > 0) {
+            if (_nowExpansion > -_minExpansion) {
                 expansionParameter = -_expansionStep;
                 _nowExpansion -= _expansionStep;
             }

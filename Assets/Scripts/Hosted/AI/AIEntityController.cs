@@ -1,100 +1,262 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class AIEntityController : MonoBehaviour
+public class AIEntityController : MonoBehaviour, WeaponTriggerable
 {
     [SerializeField] private WeaponDetectorController _detector;
+    [SerializeField] private List<string> _targetsTags;
+    [SerializeField] private float _dodgeThreshold = 1f;
+    [SerializeField] private float _dodgeDelay;
+    [SerializeField] private float _flyBetweenThreshold = 1f;
+    private Vector3 _size;
+    private bool _isDodjing = false;
     private AIController _bossObject;
+    private Rigidbody2D _rb;
+    private float _checkTimeForDodgeDelay = 0;
+    private ShootController _shootController;
 
-    protected void Awake() {
+    void Awake() {
         if (!_detector) {
-            Debug.LogWarning($"AI Entity Controller: {gameObject.name}. No Weapon Detector Controller!");
+            Debug.LogWarning($"AI Entity Controller: {gameObject.name} Weapon Detector Controller not found!");
         }
-    } 
+
+        _rb = GetComponent<Rigidbody2D>();
+
+        if (!_rb) {
+            Debug.LogError($"AI Entity Controller: {gameObject.name}: component Rigidbody2D not found!");
+        }
+
+        var renderer = GetComponent<SpriteRenderer>();
+
+        if (renderer == null) {
+            Debug.LogWarning($"AI Entity Controller: {gameObject.name}: component Sprite Renderer not found!");
+        } else {
+            _size = renderer.bounds.size;
+        }
+
+        _shootController = GetComponent<ShootController>();
+
+        if (_shootController == null) {
+            Debug.LogWarning($"AI Entity Controller: {gameObject.name}: component Shoot Controller not found!");
+        }
+    }
+
+    void Start() {
+        StartCoroutine(PerformMode());
+    }
 
     public void Connect(AIController boss) {
         _bossObject = boss;
     }
 
-    // [SerializeField] private float _speed;
-    // [SerializeField] private float _increaseFactorForSpeed = 10f;
-    // [SerializeField] private float _modeWholeLineIncreaseFactorForSpeed = 2f;
-    // [SerializeField] private float _modePursuitLiveTime = 5f;
-    // [SerializeField] private float _modeDoublePenetrationLiveTime = 2f;
-    // [SerializeField] private float _modeWholeLineDeviation = 1f;
+    public void OnWeaponTrigger(GameObject trigger, string targetTag) {
+        if (_bossObject != null && _bossObject.GetNowMode() != null && _bossObject.GetNowMode().IsEntityCanDodge && Time.time - _checkTimeForDodgeDelay > _dodgeDelay) {
+            StartCoroutine(PerformDodge(trigger, targetTag));
+        }
+    }
 
-    // [SerializeField] private float _pursuitProbability = 0.5f;
-    // [SerializeField] private float _wholeLineProbability = 0.3f;
-    // [SerializeField] private float _doublePenetrationProbability = 0.2f;
+    private IEnumerator PerformMode() {
+        while(!_bossObject) {
+            yield return null;
+        }
 
-    // private Rigidbody2D _rb;
-    // private bool _isRandomMode = false;
-    
+        while(true) {
+            if (_shootController) {
+                _shootController.SetDelay(_bossObject.GetNowMode().EntityShootDelay);
+                _shootController.SetSpeed(_bossObject.GetNowMode().EntityShootSpeed);
+                _shootController.SetProjectile(_bossObject.GetNowMode().EntityAttackPrefab);
+            }
 
-    // private float _checkTime;
-    // private bool _isModeActive;
-    // private float _wholeLineDirection;
-    // private List<GameObject> _doublePenetrationTargets = new List<GameObject>();
+            switch(_bossObject.GetNowMode().Mode) {
+                case AIMode.Modes.PURSUIT: {
+                    if (_targetsTags.Count > 0) {
+                        var target = Utils.GetRandomObjectWithTag(_targetsTags[Random.Range(0, _targetsTags.Count)]);
 
-    // private void Awake()
-    // {
-    //     _rb = GetComponent<Rigidbody2D>();
+                        if (target) {
+                            
 
-    //     if (_rb == null) {
-    //         Debug.LogWarning($"{gameObject.name} has no Rigidbody2D component!");
-    //     }
-    // }
+                            while(_bossObject.GetNowMode().Mode == AIMode.Modes.PURSUIT) {
+                                if (!_isDodjing) {
+                                    PursuitMode(target);
+                                }
+                                yield return new WaitForFixedUpdate();
+                            }
+                        }
+                    }
+                    
+                    break;
+                }
 
-    // private void FixedUpdate() {
-    //     if (_isRandomMode && !_isModeActive) {
-    //         _operationMode = GetRandomOperatingMode();
-    //     }
+                case AIMode.Modes.FREE: {
+                    float startDirection = Mathf.Sign(Random.Range(0, 2) * 2 - 1);
 
-    //     HandleOperatingMode();
-    // }
+                    if (_shootController) {
+                        _shootController.StartRepeatUsing();
+                    }
 
-    // void HandleOperatingMode() {
-    //     switch (_operationMode) {
-    //         case OperatingModes.PURSUIT: {
-    //             Pursuit();
-    //             break;
-    //         }
-    //         case OperatingModes.WHOLE_LINE: {
-    //             Whole_Line();
-    //             break;
-    //         }
-    //         case OperatingModes.DOUBLE_PENETRATION: {
-    //             Double_Penetration();
-    //             break;
-    //         }
-    //         case OperatingModes.RANDOM:
-    //             _isRandomMode = true;
-    //             break;
-    //     }
-    // }
+                    while(_bossObject.GetNowMode().Mode == AIMode.Modes.FREE) {
+                        if (!_isDodjing) {
+                            FlyBetweenBorders(ref startDirection);
+                        }
+                        yield return new WaitForFixedUpdate();
+                    }
 
-    // void Pursuit() {
-    //     if (!_isModeActive) {
-    //         _isModeActive = true;
-    //         _checkTime = Time.time;
-    //     }
+                    if (_shootController) {
+                        _shootController.StopRepeatUsing();
+                    }
 
-    //     GameObject closestPlayer = GetClosestPlayer();
+                    break;
+                }
 
-    //     if (closestPlayer != null) {
-    //         float direction = closestPlayer.transform.position.x - transform.position.x;
+                case AIMode.Modes.MEGAFIRE: {
+                    float startDirection = Mathf.Sign(Random.Range(0, 2) * 2 - 1);
 
-    //         if (direction != 0) {
-    //             direction = Mathf.Sign(direction);
-    //             _rb.velocity = new Vector2(direction * _speed * _increaseFactorForSpeed * Time.deltaTime, 0);
-    //         } else {
-    //             _rb.velocity = Vector2.zero;
-    //         }
-    //     }
+                    if (_shootController) {
+                        _shootController.StartRepeatUsing();
+                    }
 
-    //     if (Time.time - _checkTime > _modePursuitLiveTime) {
-    //         _isModeActive = false;
-    //     }
-    // }
+                    while(_bossObject.GetNowMode().Mode == AIMode.Modes.MEGAFIRE) {
+                        if (!_isDodjing) {
+                            FlyBetweenBorders(ref startDirection);
+                        }
+                        yield return new WaitForFixedUpdate();
+                    }
+
+                    if (_shootController) {
+                        _shootController.StopRepeatUsing();
+                    }
+
+                    break;
+                }
+            }
+        }
+    }
+
+    private IEnumerator PerformDodge(GameObject trigger, string targetTag) {
+        _checkTimeForDodgeDelay = Time.time;
+        _isDodjing = true;
+
+        Vector3 targetPosition = transform.position;
+        bool isDodgeFromOne = false;
+        float targetSizeX = trigger.GetComponent<SpriteRenderer>()?.bounds.size.x ?? 0f;
+
+        if (trigger && trigger.tag != "Untagged") {
+            List<GameObject> allSuchTriggers = new List<GameObject>(GameObject.FindGameObjectsWithTag(trigger.tag));
+
+            allSuchTriggers.RemoveAll(x => x.GetComponent<WeaponController>()?.GetTargetsTags().Contains(targetTag) != true);
+
+            if (allSuchTriggers.Count > 1) {
+                allSuchTriggers.Sort((a, b) => a.transform.position.x.CompareTo(b.transform.position.x));
+
+                float minDistanceToInterval = float.MaxValue;
+                float requiredInterval = _size.x + 2 * _dodgeThreshold + targetSizeX;
+                bool intervalFound = false;
+
+                // Iterate through adjacent pairs of bullets to find nearest suitable interval
+                for (int i = 0; i < allSuchTriggers.Count - 1; i++) {
+                    float distanceBetween = Mathf.Abs(allSuchTriggers[i + 1].transform.position.x - allSuchTriggers[i].transform.position.x);
+
+                    // If interval is wide enough for a dodge
+                    if (distanceBetween >= requiredInterval) {
+                        intervalFound = true;
+
+                        // Calculate midpoint of the interval
+                        float intervalCenterX = (allSuchTriggers[i].transform.position.x + allSuchTriggers[i + 1].transform.position.x) / 2;
+                        float distanceToInterval = Mathf.Abs(transform.position.x - intervalCenterX);
+
+                        // Choose the nearest interval
+                        if (distanceToInterval < minDistanceToInterval) {
+                            minDistanceToInterval = distanceToInterval;
+                            targetPosition.x = intervalCenterX;
+                        }
+                    }
+                }
+
+                if (!intervalFound) {
+                    // No interval found, move to the closest edge of the formation
+                    float leftEdge = allSuchTriggers.Min(x => x.transform.position.x) - (_size.x / 2f + _dodgeThreshold + targetSizeX / 2f);
+                    float rightEdge = allSuchTriggers.Max(x => x.transform.position.x) + (_size.x / 2f + _dodgeThreshold + targetSizeX / 2f);
+
+                    if (Mathf.Abs(transform.position.x - leftEdge) < Mathf.Abs(transform.position.x - rightEdge)) {
+                        targetPosition.x = leftEdge; 
+                    } else if (Mathf.Abs(transform.position.x - leftEdge) > Mathf.Abs(transform.position.x - rightEdge)) {
+                        targetPosition.x = rightEdge;
+                    } else {
+                        float randValue = Mathf.Sign(Random.Range(0, 2) * 2 -1);
+
+                        if (randValue > 0) {
+                            targetPosition.x = leftEdge; 
+                        } else {
+                            targetPosition.x = rightEdge;
+                        }
+                    }
+                }
+            } else {
+                isDodgeFromOne = true;
+            }
+        } else {
+            isDodgeFromOne = true;
+        }
+
+        if (isDodgeFromOne) {
+            float distance = transform.position.x - trigger.transform.position.x;
+
+            targetPosition = transform.position + new Vector3(
+                Mathf.Sign(distance) * (_size.x / 2f + targetSizeX / 2f - Mathf.Abs(distance) + _dodgeThreshold),
+                0,
+                0
+            );
+        }
+
+        var targetVelocity = trigger.GetComponent<Rigidbody2D>();
+
+        if (targetVelocity) {
+            _rb.velocity = new Vector2(targetVelocity.velocity.x, 0);
+        } else {
+            _rb.velocity = Vector2.zero;
+        }
+
+        StartCoroutine(Utils.SmoothlyMove(transform, targetPosition, 0.1f));
+
+        yield return new WaitUntil(() => trigger.transform.position.y < transform.position.y - _size.y / 2f);
+
+        _isDodjing = false;
+    }
+
+    void PursuitMode(GameObject target) {
+        float direction = target.transform.position.x - transform.position.x;
+
+        if (Mathf.Abs(direction) > 0.1f) {
+            float targetSpeed = direction * _bossObject.GetNowMode().EntitySpeed * _bossObject.GetNowMode().IncreaseFactorForSpeed * Time.deltaTime;
+            _rb.velocity = new Vector2(Mathf.MoveTowards(_rb.velocity.x, targetSpeed, 0.1f), 0);
+        } else {
+            if (_shootController) {
+                _shootController.UseSkill();
+            }
+            _rb.velocity = Vector2.zero;
+        }
+    }
+
+    void FlyBetweenBorders(ref float direction) {
+        if (IsReachedBound(direction)) {
+            direction = -direction;
+        }
+
+        _rb.velocity = new Vector2(direction * _bossObject.GetNowMode().EntitySpeed * _bossObject.GetNowMode().IncreaseFactorForSpeed * Time.deltaTime, 0);
+    }
+
+    private bool IsReachedBound(float direction) {
+        float leftBound = Utils.GetLeftBoundPlayerShipPosX();
+        float rightBound = Utils.GetRightBoundPlayerShipPosX();
+
+        if (direction > 0) {
+            return transform.position.x >= rightBound + _flyBetweenThreshold;
+        } else {
+            return transform.position.x <= leftBound - _flyBetweenThreshold;
+        }
+    }
 
     // void Whole_Line() {
     //     if (!_isModeActive) {
@@ -162,73 +324,5 @@ public class AIEntityController : MonoBehaviour
     //     } else {
     //         _isModeActive = false;
     //     }
-    // }
-
-    // private GameObject GetClosestPlayer() {
-    //     var players = GameObject.FindGameObjectsWithTag("Player");
-
-    //     GameObject closestPlayer = null;
-    //     float minDistance = Mathf.Infinity;
-
-    //     foreach (var player in players) {
-    //         float distance = Mathf.Abs(transform.position.x - player.transform.position.x);
-    //         if (distance < minDistance) {
-    //             minDistance = distance;
-    //             closestPlayer = player;
-    //         }
-    //     }
-
-    //     return closestPlayer;
-    // }
-
-    // void MoveTowardsTargets(List<GameObject> targets) {
-    //     if (Time.time - _checkTime < _modeDoublePenetrationLiveTime / 2f) {
-    //         if (targets[0]) {
-    //             MoveToTarget(targets[0]);
-    //         }
-    //     } else {
-    //         if (targets.Count < 2) {
-    //             _isModeActive = false;
-    //             return;
-    //         }
-
-    //         if (targets[1]) {
-    //             MoveToTarget(targets[1]);
-    //         } 
-    //     }
-    // }
-
-    // void MoveToTarget(GameObject target) {
-    //     Vector3 targetPosition = new Vector3(target.transform.position.x, transform.position.y, transform.position.z);
-    //     transform.position = Vector3.MoveTowards(transform.position, targetPosition, _speed * Time.deltaTime);
-    // }
-
-    // private bool IsReachedBound(float direction) {
-    //     float leftBound = Utils.GetLeftBoundPlayerShipPosX();
-    //     float rightBound = Utils.GetRightBoundPlayerShipPosX();
-
-    //     if (direction > 0) {
-    //         return transform.position.x >= rightBound;
-    //     } else {
-    //         return transform.position.x <= leftBound;
-    //     }
-    // }
-
-    // public OperatingModes GetRandomOperatingMode() {
-    //     List<OperatingModes> randList = new List<OperatingModes>();
-
-    //     for (int i = 0; i < _pursuitProbability * 100; i++) {
-    //         randList.Add(OperatingModes.PURSUIT);
-    //     }
-
-    //     for (int i = 0; i < _wholeLineProbability * 100; i++) {
-    //         randList.Add(OperatingModes.WHOLE_LINE);
-    //     }
-
-    //     for (int i = 0; i < _doublePenetrationProbability * 100; i++) {
-    //         randList.Add(OperatingModes.DOUBLE_PENETRATION);
-    //     }
-
-    //     return randList[UnityEngine.Random.Range(0, randList.Count)];
     // }
 }

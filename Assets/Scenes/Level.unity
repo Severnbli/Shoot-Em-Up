@@ -1430,8 +1430,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30b3a140b917c62438fa562b85059575, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _objectsThatSubordinateTags: []
-  _operationMode: 3
+  _objectsThatSubordinateTags:
+  - Enemy
+  _modes:
+  - _mode: 0
+    _probability: 0.3
+    _duration: 10
+    _maxDurationDeviation: 2
+    _entitySpeed: 10
+    _entityShootDelay: 1
+    _entityShootSpeed: 5
+    _entityAttackPrefab: {fileID: 549261088877501598, guid: 6b11985a3eb1f4a4f8071ae256d6084d, type: 3}
+    _increaseFactorForSpeed: 10
+    _isEntityCanDodge: 1
+  - _mode: 1
+    _probability: 0.3
+    _duration: 10
+    _maxDurationDeviation: 2
+    _entitySpeed: 10
+    _entityShootDelay: 0.5
+    _entityShootSpeed: 5
+    _entityAttackPrefab: {fileID: 549261088877501598, guid: 6b11985a3eb1f4a4f8071ae256d6084d, type: 3}
+    _increaseFactorForSpeed: 10
+    _isEntityCanDodge: 1
+  - _mode: 2
+    _probability: 0.3
+    _duration: 3
+    _maxDurationDeviation: 2
+    _entitySpeed: 30
+    _entityShootDelay: 0.2
+    _entityShootSpeed: 5
+    _entityAttackPrefab: {fileID: 549261088877501598, guid: 6b11985a3eb1f4a4f8071ae256d6084d, type: 3}
+    _increaseFactorForSpeed: 10
+    _isEntityCanDodge: 0
+  _isModeCanRepeatLast: 1
+  _startAlertDelay: 3
 --- !u!114 &1449810222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1465,6 +1498,7 @@ MonoBehaviour:
   - {fileID: 1281429239}
   _scrollAxis: Mouse ScrollWheel
   _maxExpansion: 2
+  _minExpansion: 2
   _expansionStep: 0.1
 --- !u!1 &1574035483
 GameObject:
@@ -1627,7 +1661,8 @@ MonoBehaviour:
   _quantityOfCursorZones: 9
   _quantityOfCenterZones: 3
   _degreeGround: 2
-  _energyWaste: 0
+  _isConnectToEnergySystem: 1
+  _energyWaste: 0.1
   _increaseFactorForSpeed: 10
 --- !u!1 &2021023173
 GameObject:

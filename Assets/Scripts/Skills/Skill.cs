@@ -12,6 +12,7 @@ public class Skill : MonoBehaviour
     protected bool _isRepeatUsing = false;
     protected bool _isUsingAllowed = true;
     protected EnergyEntityController _energyController;
+    protected Rigidbody2D _rb;
 
     protected virtual void Awake() {
         if (_isConnectToEnergySystem) {    
@@ -20,6 +21,12 @@ public class Skill : MonoBehaviour
             if (!_energyController) {
                 Debug.LogError($"Skill: {gameObject.name} has no component Energy Entity Controller!");
             }
+        }
+
+        _rb = GetComponent<Rigidbody2D>();
+
+        if (!_rb) {
+            Debug.LogWarning($"Skill: {gameObject.name} has no component Rigidbody2D!");
         }
     }
 

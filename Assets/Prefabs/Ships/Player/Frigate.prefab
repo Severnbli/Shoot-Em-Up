@@ -247,6 +247,7 @@ MonoBehaviour:
   _localScaleFactor: 1
   _projectileStartTransform: {fileID: 0}
   _targetsTags: []
+  _isProjectileHasHorizontalMovement: 1
 --- !u!114 &5493003049072373719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,7 +265,7 @@ MonoBehaviour:
     _handlerType: 0
   _isKeyActive: 1
   _isSkillActive: 1
-  _delay: 2
+  _delay: 0.5
   _isConnectToEnergySystem: 1
   _energyWaste: 5
   _projectile: {fileID: 7359522011428763970, guid: f27c9d16db42c0b4f96d4a9e9a427aef, type: 3}
@@ -274,6 +275,7 @@ MonoBehaviour:
   _projectileStartTransform: {fileID: 5211587711664900265}
   _targetsTags:
   - Enemy
+  _isProjectileHasHorizontalMovement: 1
 --- !u!114 &3159774725271116859
 MonoBehaviour:
   m_ObjectHideFlags: 0
