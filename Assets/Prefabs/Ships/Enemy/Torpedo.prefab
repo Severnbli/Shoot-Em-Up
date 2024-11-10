@@ -46,9 +46,9 @@ GameObject:
   - component: {fileID: 1589577925562037458}
   - component: {fileID: -6785136168334193133}
   - component: {fileID: -5055515902045755975}
-  - component: {fileID: 9185707970801952318}
   - component: {fileID: 5459847150517526819}
   - component: {fileID: 7816428669699916991}
+  - component: {fileID: -148179686085111796}
   m_Layer: 0
   m_Name: Torpedo
   m_TagString: Enemy
@@ -273,33 +273,6 @@ MonoBehaviour:
   _isHealthCanRestore: 0
   _restoreHealthCount: 0
   _restoreHealthDelay: 0
---- !u!114 &9185707970801952318
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 941604962580897024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1ce1e593bace784795132e0294bba4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _inputKey:
-    _key: 0
-    _handlerType: 0
-  _isKeyActive: 0
-  _isSkillActive: 1
-  _delay: 1
-  _isConnectToEnergySystem: 0
-  _energyWaste: 0
-  _projectile: {fileID: 549261088877501598, guid: 6b11985a3eb1f4a4f8071ae256d6084d, type: 3}
-  _speed: 4
-  _damageAmount: 10
-  _localScaleFactor: 1
-  _projectileStartTransform: {fileID: 6218909314515699509}
-  _targetsTags:
-  - Player
 --- !u!114 &5459847150517526819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -331,6 +304,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _detector: {fileID: 6459656331840309729}
+  _targetsTags:
+  - Player
+  _dodgeThreshold: 1
+  _dodgeDelay: 1
+  _flyBetweenThreshold: 1
+--- !u!114 &-148179686085111796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941604962580897024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e0d4b87112eb8e4f88923f98ef0c1e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputKey:
+    _key: 0
+    _handlerType: 0
+  _isKeyActive: 0
+  _isSkillActive: 1
+  _delay: 0
+  _isConnectToEnergySystem: 0
+  _energyWaste: 0
+  _projectile: {fileID: 0}
+  _speed: 0
+  _damageAmount: 10
+  _localScaleFactor: 1
+  _projectileStartTransform: {fileID: 6218909314515699509}
+  _targetsTags:
+  - Player
+  _isProjectileHasHorizontalMovement: 1
 --- !u!1 &5811837603912811738
 GameObject:
   m_ObjectHideFlags: 0
@@ -340,8 +346,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8374985066812324939}
-  - component: {fileID: 4121436094534034118}
   - component: {fileID: 6459656331840309729}
+  - component: {fileID: 2350690593976909593}
   m_Layer: 0
   m_Name: WeaponDetector
   m_TagString: Untagged
@@ -364,8 +370,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8055720834238377331}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &4121436094534034118
-BoxCollider2D:
+--- !u!114 &6459656331840309729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5811837603912811738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbea31075503af24787d2c7118bbcebf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _detectingTags:
+  - Enemy
+  _objectThatContainsWeaponTriggerable: {fileID: 941604962580897024}
+--- !u!60 &2350690593976909593
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -396,7 +417,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.012705952, y: 0.7699721}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -406,20 +427,13 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.838583, y: 0.222404}
-  m_EdgeRadius: 0
---- !u!114 &6459656331840309729
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5811837603912811738}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbea31075503af24787d2c7118bbcebf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _detectingTags:
-  - Enemy
+  m_Points:
+    m_Paths:
+    - - {x: -1.2242975, y: 1.0184102}
+      - {x: -1.2272139, y: -0.40899178}
+      - {x: -0.80311376, y: 0.09994078}
+      - {x: 0.032674946, y: 0.50244904}
+      - {x: 0.94436544, y: 0.02078557}
+      - {x: 1.2939517, y: -0.49070787}
+      - {x: 1.3192663, y: 1.0086162}
+  m_UseDelaunayMesh: 0

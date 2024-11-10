@@ -11,6 +11,7 @@ public class BackgroundController : MonoBehaviour
     private Vector3 _cameraMovement;
     private Dictionary<string, Vector3> _cameraBounds;
     
+
     private void Start()
     {
         _lastCameraPosition = Camera.main.transform.position;

@@ -3,6 +3,7 @@ using UnityEngine;
 public class ProjectileTypeWeaponController : WeaponController
 {
     protected float _speed;
+    protected float _velocityX;
 
     protected override void FixedUpdate() {
         base.FixedUpdate();
@@ -26,6 +27,10 @@ public class ProjectileTypeWeaponController : WeaponController
 
     public void SetSpeed(float speed) {
         _speed = speed;
+    }
+
+    public void SetVelocityX(float velocityX) {
+        _velocityX = velocityX;
     }
 
     public override void SetActualScale()

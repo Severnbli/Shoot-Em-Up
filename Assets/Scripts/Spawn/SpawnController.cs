@@ -1,15 +1,12 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnController : MonoBehaviour
 {
     [SerializeField] private GameObject _object; // Объект для спавна
-    
     [SerializeField] private int _quantity; // Количество объектов для спавна
-
     [SerializeField] private float _interval; // Обычный интервал между объектами
-    
     [SerializeField] private float _centerInterval; // Центральный интервал (используется при симметричном спавне (нечётное число объектов))
     [SerializeField] private Vector3 _spawnStartPosition; // Центральное положение области спавна
     [SerializeField] private bool _isRealignmentModeOn = true;
@@ -19,7 +16,7 @@ public class SpawnController : MonoBehaviour
     private List<GameObject> _activeObjects = new List<GameObject>();
 
     void Awake() {
-        _quantity = Math.Abs(_quantity);
+        _quantity = Mathf.Abs(_quantity);
         
         if (_quantity > 0) {
             CountIntervals();
@@ -73,7 +70,7 @@ public class SpawnController : MonoBehaviour
             Vector3 position = transform.position - _intervalVector * (quantity / 2);
 
             for (int i = 0; i < quantity; i++) {
-                _activeObjects[i].transform.position = position;
+                _activeObjects[i].transform.position = position;        
 
                 position += _intervalVector;
             }
@@ -107,10 +104,24 @@ public class SpawnController : MonoBehaviour
     }
 
     private void CountIntervals() {
-        _interval = Math.Abs(_interval);
-        _centerInterval = Math.Abs(_centerInterval);
+        _interval = Mathf.Abs(_interval);
+        _centerInterval = Mathf.Abs(_centerInterval);
         
         _intervalVector = new Vector3(_interval, 0, 0);
         _centerIntervalVector = new Vector3(_centerInterval, 0, 0);       
+    }
+
+    public Vector3 GetIntervalVector() {
+        return _intervalVector;
+    }
+
+    public Vector2 GetVelocity() {
+        var rb = GetComponent<Rigidbody2D>();
+
+        if (rb) {
+            return rb.velocity;
+        } else {
+            return Vector2.zero;
+        }
     }
 }

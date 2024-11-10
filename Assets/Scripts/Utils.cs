@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -149,5 +150,25 @@ public class Utils {
         Quaternion randomRotation = Quaternion.Euler(0f, 0f, randomAngle);
         
         return randomRotation;
+    }
+
+    public static GameObject GetRandomObjectWithTag(string tag) {
+        var objectsWithSuchTag = GameObject.FindGameObjectsWithTag(tag);
+
+        return objectsWithSuchTag[UnityEngine.Random.Range(0, objectsWithSuchTag.Length)];
+    }
+
+    public static IEnumerator SmoothlyMove(Transform objectTransform, Vector3 position, float changePositionDuration) {
+        float elapsedTime = 0f;
+
+        while (elapsedTime < changePositionDuration) {
+            objectTransform.position = Vector3.Lerp(
+                objectTransform.position, 
+                position, 
+                elapsedTime / changePositionDuration
+            );
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
     }
 }
