@@ -8,11 +8,12 @@ public class AIController : HostController
     [SerializeField] private List<AIMode> _modes;
     [SerializeField] private bool _isModeCanRepeatLast = true;
     [SerializeField] private float _startAlertDelay = 3f;
+    [SerializeField] private GameObject _alertableObject;
     
     private AIMode _nowMode;
     private AIMode _nextMode;
     private AIMode _lastRandomingMode;
-    private bool _isAlert = false;
+    private Alertable _alertable;
 
     void Awake() {
         if (_modes.Count > 0) {
@@ -20,6 +21,12 @@ public class AIController : HostController
             _nextMode = GetRandomMode();
 
             StartCoroutine(PrepareWorking());
+        }
+
+        _alertable = _alertableObject.GetComponent<Alertable>();
+
+        if (_alertable == null) {
+            Debug.LogWarning($"AI Controller: {gameObject.name} has no Alertable object.");
         }
     }
 
@@ -52,18 +59,15 @@ public class AIController : HostController
         return _nextMode;
     }
 
-    public bool IsAlert() {
-        return _isAlert;
-    }
-
     private IEnumerator PrepareWorking() {
         while (true) {
             Debug.Log("Now mode: " + _nowMode.Mode);
-            yield return new WaitForSeconds(_nowMode._nowDuration - _startAlertDelay);
-        
-            _isAlert = true;
+            yield return new WaitForSeconds(Mathf.Clamp(_nowMode._nowDuration - _startAlertDelay, 0, _nowMode._nowDuration));
+
+            if (_alertable != null) {
+                StartCoroutine(_alertable.Alert(_startAlertDelay));
+            }
             yield return new WaitForSeconds(_startAlertDelay);
-            _isAlert = false;
 
             _nowMode = _nextMode;
             

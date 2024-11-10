@@ -1251,6 +1251,8 @@ GameObject:
   - component: {fileID: 1441173648}
   - component: {fileID: 1441173650}
   - component: {fileID: 1441173649}
+  - component: {fileID: 1441173652}
+  - component: {fileID: 1441173651}
   m_Layer: 5
   m_Name: Fill
   m_TagString: Untagged
@@ -1315,6 +1317,39 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1441173647}
   m_CullTransparentMesh: 1
+--- !u!95 &1441173651
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1441173647}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2cd3727ac09089b4684e0f818a27d336, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1441173652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1441173647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f64f5a05b35d43740942451ff7cc742f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1449810215
 GameObject:
   m_ObjectHideFlags: 0
@@ -1465,6 +1500,7 @@ MonoBehaviour:
     _isEntityCanDodge: 0
   _isModeCanRepeatLast: 1
   _startAlertDelay: 3
+  _alertableObject: {fileID: 1441173647}
 --- !u!114 &1449810222
 MonoBehaviour:
   m_ObjectHideFlags: 0

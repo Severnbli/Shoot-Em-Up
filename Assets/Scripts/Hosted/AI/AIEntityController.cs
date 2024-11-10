@@ -76,12 +76,19 @@ public class AIEntityController : MonoBehaviour, WeaponTriggerable
 
                         if (target) {
                             
+                            if (_shootController) {
+                                _shootController.StartRepeatUsing();
+                            }
 
-                            while(_bossObject.GetNowMode().Mode == AIMode.Modes.PURSUIT) {
+                            while(target && _bossObject.GetNowMode().Mode == AIMode.Modes.PURSUIT) {
                                 if (!_isDodjing) {
                                     PursuitMode(target);
                                 }
                                 yield return new WaitForFixedUpdate();
+                            }
+
+                            if (_shootController) {
+                                _shootController.StopRepeatUsing();
                             }
                         }
                     }
@@ -227,14 +234,11 @@ public class AIEntityController : MonoBehaviour, WeaponTriggerable
 
     void PursuitMode(GameObject target) {
         float direction = target.transform.position.x - transform.position.x;
-
+        
         if (Mathf.Abs(direction) > 0.1f) {
             float targetSpeed = direction * _bossObject.GetNowMode().EntitySpeed * _bossObject.GetNowMode().IncreaseFactorForSpeed * Time.deltaTime;
             _rb.velocity = new Vector2(Mathf.MoveTowards(_rb.velocity.x, targetSpeed, 0.1f), 0);
         } else {
-            if (_shootController) {
-                _shootController.UseSkill();
-            }
             _rb.velocity = Vector2.zero;
         }
     }
@@ -257,72 +261,4 @@ public class AIEntityController : MonoBehaviour, WeaponTriggerable
             return transform.position.x <= leftBound - _flyBetweenThreshold;
         }
     }
-
-    // void Whole_Line() {
-    //     if (!_isModeActive) {
-    //         _isModeActive = true;
-
-    //         _wholeLineDirection = UnityEngine.Random.Range(0, 2) * 2 - 1;
-
-    //         if (_wholeLineDirection > 0) {
-    //             float leftBound = Utils.GetLeftBoundPlayerShipPosX();
-    //             if (leftBound == Mathf.Infinity) {
-    //                 _isModeActive = false;
-    //                 return;
-    //             }
-
-    //             transform.position = new Vector3(leftBound - _modeWholeLineDeviation, transform.position.y);
-    //         } else {
-    //             float rightBound = Utils.GetRightBoundPlayerShipPosX();
-    //             if (rightBound == -Mathf.Infinity) {
-    //                 _isModeActive = false;
-    //                 return;
-    //             }
-
-    //             transform.position = new Vector3(rightBound + _modeWholeLineDeviation, transform.position.y);
-    //         }
-
-    //         _rb.velocity = new Vector2(_wholeLineDirection * _speed * _increaseFactorForSpeed * _modeWholeLineIncreaseFactorForSpeed * Time.deltaTime, 0);
-    //     }
-
-    //     if (IsReachedBound(_wholeLineDirection)) {
-    //         _isModeActive = false;
-    //     }
-    // }
-
-    // void Double_Penetration() {
-    //     if (!_isModeActive) {
-    //         _doublePenetrationTargets.Clear();
-    //         _checkTime = Time.time;
-    //         _isModeActive = true;
-    //         _rb.velocity = Vector2.zero;
-
-    //         var players = GameObject.FindGameObjectsWithTag("Player").OrderBy(p => p.transform.position.x).ToArray();
-
-    //         if (players.Length < 1) {
-    //             _isModeActive = false;
-    //             return;
-    //         } else {
-    //             GameObject target1 = players[UnityEngine.Random.Range(0, players.Length)];
-                
-    //             _doublePenetrationTargets.Add(target1);
-
-    //             if (players.Length >= 2) {
-    //                 GameObject target2;
-
-    //                 do {
-    //                     target2 = players[UnityEngine.Random.Range(0, players.Length)];
-    //                 } while (target2 == target1);
-                    
-    //                 _doublePenetrationTargets.Add(target2);
-    //             }
-    //         }
-    //     }
-        
-    //     if (Time.time - _checkTime < _modeDoublePenetrationLiveTime) {
-    //         MoveTowardsTargets(_doublePenetrationTargets);
-    //     } else {
-    //         _isModeActive = false;
-    //     }
-    // }
 }
