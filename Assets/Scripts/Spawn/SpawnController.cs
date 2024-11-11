@@ -10,13 +10,24 @@ public class SpawnController : MonoBehaviour
     [SerializeField] private float _centerInterval; // Центральный интервал (используется при симметричном спавне (нечётное число объектов))
     [SerializeField] private Vector3 _spawnStartPosition; // Центральное положение области спавна
     [SerializeField] private bool _isRealignmentModeOn = true;
+    [SerializeField] private string _whereToLoad;
     
     private Vector3 _intervalVector; // Интервал в векторной форме, для уменьшения копипаста
     private Vector3 _centerIntervalVector; // Центральный интервал в векторной форме, -//-
     private List<GameObject> _activeObjects = new List<GameObject>();
 
     void Awake() {
-        _quantity = Mathf.Abs(_quantity);
+        if (_whereToLoad != null || _whereToLoad != "") {
+            int quantity = PlayerPrefs.GetInt(_whereToLoad);
+
+            if (quantity != 0) {
+                _quantity = quantity;
+            } else {
+                _quantity = Mathf.Abs(_quantity);
+            }
+        } else {
+            _quantity = Mathf.Abs(_quantity);
+        }
         
         if (_quantity > 0) {
             CountIntervals();

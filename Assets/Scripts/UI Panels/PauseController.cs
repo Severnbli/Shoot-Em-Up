@@ -5,6 +5,7 @@ public class PauseController : MonoBehaviour
     [SerializeField] private GameObject _pausePanel;
     [SerializeField] private KeyCode _pauseButton;
     [SerializeField] private LevelChanger _levelChanger;
+    [SerializeField] private CursorControl _cursorControl;
 
     private bool _isPaused = false;
 
@@ -24,6 +25,8 @@ public class PauseController : MonoBehaviour
         _isPaused = false;
         _pausePanel.SetActive(false);
         Time.timeScale = 1;
+
+        _cursorControl.LockCursor();
     }
 
     public void MainMenu() {

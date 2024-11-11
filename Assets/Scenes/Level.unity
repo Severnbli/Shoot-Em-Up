@@ -380,6 +380,7 @@ MonoBehaviour:
   _centerInterval: 0
   _spawnStartPosition: {x: 0, y: -4, z: 0}
   _isRealignmentModeOn: 1
+  _whereToLoad: 
 --- !u!50 &74968824
 Rigidbody2D:
   serializedVersion: 4
@@ -1523,6 +1524,7 @@ MonoBehaviour:
   _centerInterval: 2
   _spawnStartPosition: {x: 0, y: 1.6, z: 0}
   _isRealignmentModeOn: 1
+  _whereToLoad: bomberQuantity
 --- !u!50 &1083296571
 Rigidbody2D:
   serializedVersion: 4
@@ -1749,6 +1751,7 @@ MonoBehaviour:
   _centerInterval: 2
   _spawnStartPosition: {x: 0, y: 2.5, z: 0}
   _isRealignmentModeOn: 1
+  _whereToLoad: frigateQuantity
 --- !u!50 &1281429240
 Rigidbody2D:
   serializedVersion: 4
@@ -2121,6 +2124,7 @@ MonoBehaviour:
   _pausePanel: {fileID: 929927710}
   _pauseButton: 27
   _levelChanger: {fileID: 348131219}
+  _cursorControl: {fileID: 1449810222}
 --- !u!114 &1449810225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2465,6 +2469,7 @@ MonoBehaviour:
   _centerInterval: 5
   _spawnStartPosition: {x: 0, y: 4, z: 0}
   _isRealignmentModeOn: 1
+  _whereToLoad: battlecruiserQuantity
 --- !u!50 &2021023176
 Rigidbody2D:
   serializedVersion: 4
