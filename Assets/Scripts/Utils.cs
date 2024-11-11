@@ -155,7 +155,11 @@ public class Utils {
     public static GameObject GetRandomObjectWithTag(string tag) {
         var objectsWithSuchTag = GameObject.FindGameObjectsWithTag(tag);
 
-        return objectsWithSuchTag[UnityEngine.Random.Range(0, objectsWithSuchTag.Length)];
+        if (objectsWithSuchTag.Length > 0) {
+            return objectsWithSuchTag[UnityEngine.Random.Range(0, objectsWithSuchTag.Length)];
+        } else {
+            return null;
+        }
     }
 
     public static IEnumerator SmoothlyMove(Transform objectTransform, Vector3 position, float changePositionDuration) {

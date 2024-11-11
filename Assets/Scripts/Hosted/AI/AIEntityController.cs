@@ -62,7 +62,9 @@ public class AIEntityController : MonoBehaviour, WeaponTriggerable
             yield return null;
         }
 
-        while(true) {
+        _shootController?.StartRepeatUsing();
+
+        while(true && Utils.GetRandomObjectWithTag("Player")) {
             if (_shootController) {
                 _shootController.SetDelay(_bossObject.GetNowMode().EntityShootDelay);
                 _shootController.SetSpeed(_bossObject.GetNowMode().EntityShootSpeed);
@@ -75,20 +77,11 @@ public class AIEntityController : MonoBehaviour, WeaponTriggerable
                         var target = Utils.GetRandomObjectWithTag(_targetsTags[Random.Range(0, _targetsTags.Count)]);
 
                         if (target) {
-                            
-                            if (_shootController) {
-                                _shootController.StartRepeatUsing();
-                            }
-
-                            while(target && _bossObject.GetNowMode().Mode == AIMode.Modes.PURSUIT) {
+                            while(target != null && _bossObject.GetNowMode().Mode == AIMode.Modes.PURSUIT) {
                                 if (!_isDodjing) {
                                     PursuitMode(target);
                                 }
                                 yield return new WaitForFixedUpdate();
-                            }
-
-                            if (_shootController) {
-                                _shootController.StopRepeatUsing();
                             }
                         }
                     }
@@ -99,19 +92,11 @@ public class AIEntityController : MonoBehaviour, WeaponTriggerable
                 case AIMode.Modes.FREE: {
                     float startDirection = Mathf.Sign(Random.Range(0, 2) * 2 - 1);
 
-                    if (_shootController) {
-                        _shootController.StartRepeatUsing();
-                    }
-
-                    while(_bossObject.GetNowMode().Mode == AIMode.Modes.FREE) {
+                    while(_bossObject.GetNowMode().Mode == AIMode.Modes.FREE && Utils.GetRandomObjectWithTag("Player")) {
                         if (!_isDodjing) {
                             FlyBetweenBorders(ref startDirection);
                         }
                         yield return new WaitForFixedUpdate();
-                    }
-
-                    if (_shootController) {
-                        _shootController.StopRepeatUsing();
                     }
 
                     break;
@@ -120,25 +105,21 @@ public class AIEntityController : MonoBehaviour, WeaponTriggerable
                 case AIMode.Modes.MEGAFIRE: {
                     float startDirection = Mathf.Sign(Random.Range(0, 2) * 2 - 1);
 
-                    if (_shootController) {
-                        _shootController.StartRepeatUsing();
-                    }
-
-                    while(_bossObject.GetNowMode().Mode == AIMode.Modes.MEGAFIRE) {
+                    while(_bossObject.GetNowMode().Mode == AIMode.Modes.MEGAFIRE && Utils.GetRandomObjectWithTag("Player")) {
                         if (!_isDodjing) {
                             FlyBetweenBorders(ref startDirection);
                         }
                         yield return new WaitForFixedUpdate();
                     }
 
-                    if (_shootController) {
-                        _shootController.StopRepeatUsing();
-                    }
-
                     break;
                 }
             }
         }
+
+        _shootController?.StopRepeatUsing();
+            
+        _rb.velocity = Vector2.zero;
     }
 
     private IEnumerator PerformDodge(GameObject trigger, string targetTag) {
@@ -254,6 +235,10 @@ public class AIEntityController : MonoBehaviour, WeaponTriggerable
     private bool IsReachedBound(float direction) {
         float leftBound = Utils.GetLeftBoundPlayerShipPosX();
         float rightBound = Utils.GetRightBoundPlayerShipPosX();
+
+        if (leftBound == Mathf.Infinity || rightBound == -Mathf.Infinity) {
+            return false;
+        }
 
         if (direction > 0) {
             return transform.position.x >= rightBound + _flyBetweenThreshold;

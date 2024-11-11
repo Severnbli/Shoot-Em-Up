@@ -34,6 +34,10 @@ public class ShootController : Skill
             }
         }
 
+        if (_projectile == null) {
+            yield break;
+        }
+
         _isUsingAllowed = false;
 
         GameObject projectile = ObjectPooling.PopObject(_projectile.tag, _projectileStartTransform.position);

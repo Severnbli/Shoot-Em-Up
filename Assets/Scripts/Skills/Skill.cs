@@ -35,7 +35,7 @@ public class Skill : MonoBehaviour
     }
 
     public virtual IEnumerator RepeatUsing() {
-        while (_isUsingAllowed) {
+        while (_isRepeatUsing) {
             yield return UseSkill();
         }
     }
