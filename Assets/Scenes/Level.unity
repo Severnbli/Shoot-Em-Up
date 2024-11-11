@@ -951,10 +951,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _object: {fileID: 2380015652854407015, guid: 24943d8b55e3a9746af16054096c0c40, type: 3}
-  _quantity: 8
+  _quantity: 5
   _interval: 2
   _centerInterval: 2
-  _spawnStartPosition: {x: 0, y: 1.6, z: 0}
+  _spawnStartPosition: {x: 0, y: 0, z: 0}
   _isRealignmentModeOn: 1
 --- !u!50 &1083296571
 Rigidbody2D:
@@ -1176,10 +1176,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _object: {fileID: 68594363858751482, guid: 1231771ba21af984b9af55a64f1cc0b2, type: 3}
-  _quantity: 8
-  _interval: 2
-  _centerInterval: 2
-  _spawnStartPosition: {x: 0, y: 2.5, z: 0}
+  _quantity: 3
+  _interval: 3
+  _centerInterval: 3
+  _spawnStartPosition: {x: 0, y: 1.8, z: 0}
   _isRealignmentModeOn: 1
 --- !u!50 &1281429240
 Rigidbody2D:
@@ -1412,11 +1412,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _objectsThatSubordinateTags:
   - Player
-  _energyAmount: 300
+  - MousePlayerController
+  _energyAmount: 100
   _isEnergyBoundOnTop: 1
   _isEnergyCanRecover: 1
-  _recoveryQuantity: 4
-  _recoveryDelay: 0.1
+  _recoveryQuantity: 10
+  _recoveryDelay: 1
 --- !u!114 &1449810221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1438,7 +1439,7 @@ MonoBehaviour:
     _maxDurationDeviation: 2
     _entitySpeed: 10
     _entityShootDelay: 1
-    _entityShootSpeed: 4
+    _entityShootSpeed: 5
     _entityAttackPrefab: {fileID: 549261088877501598, guid: 6b11985a3eb1f4a4f8071ae256d6084d, type: 3}
     _increaseFactorForSpeed: 10
     _isEntityCanDodge: 1
@@ -1455,10 +1456,10 @@ MonoBehaviour:
   - _mode: 2
     _probability: 0.3
     _duration: 3
-    _maxDurationDeviation: 0
+    _maxDurationDeviation: 2
     _entitySpeed: 30
-    _entityShootDelay: 0.3
-    _entityShootSpeed: 3
+    _entityShootDelay: 0.2
+    _entityShootSpeed: 5
     _entityAttackPrefab: {fileID: 549261088877501598, guid: 6b11985a3eb1f4a4f8071ae256d6084d, type: 3}
     _increaseFactorForSpeed: 10
     _isEntityCanDodge: 0
@@ -1497,8 +1498,8 @@ MonoBehaviour:
   - {fileID: 1281429239}
   _scrollAxis: Mouse ScrollWheel
   _maxExpansion: 2
-  _minExpansion: 1
-  _expansionStep: 0.2
+  _minExpansion: 2
+  _expansionStep: 0.1
 --- !u!1 &1574035483
 GameObject:
   m_ObjectHideFlags: 0
@@ -1660,7 +1661,7 @@ MonoBehaviour:
   _quantityOfCursorZones: 9
   _quantityOfCenterZones: 3
   _degreeGround: 2
-  _isConnectToEnergySystem: 0
+  _isConnectToEnergySystem: 1
   _energyWaste: 0.1
   _increaseFactorForSpeed: 10
 --- !u!1 &2021023173
@@ -1709,7 +1710,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _object: {fileID: 20253142951584349, guid: 83d277bfcf7fc9c4db2ca0b939e1b738, type: 3}
-  _quantity: 3
+  _quantity: 2
   _interval: 5
   _centerInterval: 5
   _spawnStartPosition: {x: 0, y: 4, z: 0}

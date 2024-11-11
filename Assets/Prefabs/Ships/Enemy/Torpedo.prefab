@@ -66,7 +66,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.008, y: -3.004, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6218909314515699509}
@@ -256,6 +256,33 @@ MonoBehaviour:
   _isHealthCanRestore: 0
   _restoreHealthCount: 0
   _restoreHealthDelay: 0
+--- !u!114 &9185707970801952318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941604962580897024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1ce1e593bace784795132e0294bba4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputKey:
+    _key: 0
+    _handlerType: 0
+  _isKeyActive: 0
+  _isSkillActive: 1
+  _delay: 1
+  _isConnectToEnergySystem: 0
+  _energyWaste: 0
+  _projectile: {fileID: 549261088877501598, guid: 6b11985a3eb1f4a4f8071ae256d6084d, type: 3}
+  _speed: 10
+  _damageAmount: 10
+  _localScaleFactor: 1
+  _projectileStartTransform: {fileID: 6218909314515699509}
+  _targetsTags:
+  - Player
 --- !u!114 &5459847150517526819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,7 +316,7 @@ MonoBehaviour:
   _detector: {fileID: 6459656331840309729}
   _targetsTags:
   - Player
-  _dodgeThreshold: 0.5
+  _dodgeThreshold: 1
   _dodgeDelay: 1
   _flyBetweenThreshold: 1
 --- !u!114 &-148179686085111796
@@ -314,12 +341,12 @@ MonoBehaviour:
   _energyWaste: 0
   _projectile: {fileID: 0}
   _speed: 0
-  _damageAmount: 1
+  _damageAmount: 10
   _localScaleFactor: 1
   _projectileStartTransform: {fileID: 6218909314515699509}
   _targetsTags:
   - Player
-  _isProjectileHasHorizontalMovement: 0
+  _isProjectileHasHorizontalMovement: 1
 --- !u!1 &5811837603912811738
 GameObject:
   m_ObjectHideFlags: 0
