@@ -10,6 +10,12 @@ public class ButtonController : MonoBehaviour
         _levelChanger.ChangeLevel();
     }
 
+    public void MenuButton() {
+        PlayerPrefs.SetString("nextScene", "MainMenu");
+
+        _levelChanger.ChangeLevel();
+    }
+
     public void SettingsButton() {
 
     }

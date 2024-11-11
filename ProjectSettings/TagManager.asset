@@ -17,6 +17,7 @@ TagManager:
   - Spawner
   - MousePlayerController
   - MovementDirection
+  - LevelChanger
   layers:
   - Default
   - TransparentFX

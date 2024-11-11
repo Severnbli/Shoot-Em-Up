@@ -26,6 +26,11 @@ public class ObjectPooling : MonoBehaviour
         }
     }
 
+    protected void OnDestroy() {
+        _replicas.Clear();
+        _poolingObjects.Clear();
+    }
+
     public static void PushObject(GameObject pushObject) {
         if (pushObject == null || pushObject.tag == "Untagged") {
             Debug.LogWarning("Object Pooling: pushing object is null or has no tag!");

@@ -742,6 +742,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isThisLoadingScreen: 0
   _loadingTime: 5
+  _isFadeOnTheStartOk: 1
 --- !u!95 &1747694809
 Animator:
   serializedVersion: 5
@@ -901,6 +902,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 935893121}
     m_Modifications:
+    - target: {fileID: 4427800715327232869, guid: 95ab580021e692e43a1aef217f60987c, type: 3}
+      propertyPath: m_Volume
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 6692079377458975871, guid: 95ab580021e692e43a1aef217f60987c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

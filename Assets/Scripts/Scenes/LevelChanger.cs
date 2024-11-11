@@ -6,11 +6,16 @@ public class LevelChanger : MonoBehaviour
 {
     [SerializeField] private bool _isThisLoadingScreen = false;
     [SerializeField] private float _loadingTime = 5f;
+    [SerializeField] private bool _isFadeOnTheStartOk = true;
     private AsyncOperation _asyncLoad;
     private Animator _animator;
 
     void Start() {
         _animator = GetComponent<Animator>();
+
+        if (!_isFadeOnTheStartOk) {
+            _animator.SetBool("noStartFade", true);
+        }
 
         if (_isThisLoadingScreen) {
             StartCoroutine(LoadLoadingScreen());
