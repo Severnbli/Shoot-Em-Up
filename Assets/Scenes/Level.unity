@@ -1102,10 +1102,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _object: {fileID: 2380015652854407015, guid: 24943d8b55e3a9746af16054096c0c40, type: 3}
-  _quantity: 5
+  _quantity: 8
   _interval: 2
   _centerInterval: 2
-  _spawnStartPosition: {x: 0, y: 0, z: 0}
+  _spawnStartPosition: {x: 0, y: 1.6, z: 0}
   _isRealignmentModeOn: 1
 --- !u!50 &1083296571
 Rigidbody2D:
@@ -1328,10 +1328,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _object: {fileID: 68594363858751482, guid: 1231771ba21af984b9af55a64f1cc0b2, type: 3}
-  _quantity: 3
-  _interval: 3
-  _centerInterval: 3
-  _spawnStartPosition: {x: 0, y: 1.8, z: 0}
+  _quantity: 8
+  _interval: 2
+  _centerInterval: 2
+  _spawnStartPosition: {x: 0, y: 2.5, z: 0}
   _isRealignmentModeOn: 1
 --- !u!50 &1281429240
 Rigidbody2D:
@@ -1576,11 +1576,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _backgroundObjects:
-  - _entity: {fileID: 380881880318727801, guid: 5768a6e33739482489e93fb26a20dd0a, type: 3}
+  - _entity: {fileID: 380881880318727801, guid: 5768a6e33739482489e93fb26a20dd0a,
+      type: 3}
     _totalCount: 100
     _speed: 0.2
     _scaleVariation: 0.5
-  - _entity: {fileID: 1338389515384092791, guid: b5d74635fdde114429193ae5d864e982, type: 3}
+  - _entity: {fileID: 1338389515384092791, guid: b5d74635fdde114429193ae5d864e982,
+      type: 3}
     _totalCount: 3
     _speed: 1
     _scaleVariation: 0.3
@@ -1600,12 +1602,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _objectsThatSubordinateTags:
   - Player
-  - MousePlayerController
-  _energyAmount: 100
+  _energyAmount: 300
   _isEnergyBoundOnTop: 1
   _isEnergyCanRecover: 1
-  _recoveryQuantity: 10
-  _recoveryDelay: 1
+  _recoveryQuantity: 4
+  _recoveryDelay: 0.1
 --- !u!114 &1449810221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1627,8 +1628,9 @@ MonoBehaviour:
     _maxDurationDeviation: 2
     _entitySpeed: 10
     _entityShootDelay: 1
-    _entityShootSpeed: 5
-    _entityAttackPrefab: {fileID: 549261088877501598, guid: 6b11985a3eb1f4a4f8071ae256d6084d, type: 3}
+    _entityShootSpeed: 4
+    _entityAttackPrefab: {fileID: 549261088877501598, guid: 6b11985a3eb1f4a4f8071ae256d6084d,
+      type: 3}
     _increaseFactorForSpeed: 10
     _isEntityCanDodge: 1
   - _mode: 1
@@ -1638,17 +1640,19 @@ MonoBehaviour:
     _entitySpeed: 10
     _entityShootDelay: 0.5
     _entityShootSpeed: 5
-    _entityAttackPrefab: {fileID: 549261088877501598, guid: 6b11985a3eb1f4a4f8071ae256d6084d, type: 3}
+    _entityAttackPrefab: {fileID: 549261088877501598, guid: 6b11985a3eb1f4a4f8071ae256d6084d,
+      type: 3}
     _increaseFactorForSpeed: 10
     _isEntityCanDodge: 1
   - _mode: 2
     _probability: 0.3
     _duration: 3
-    _maxDurationDeviation: 2
+    _maxDurationDeviation: 0
     _entitySpeed: 30
-    _entityShootDelay: 0.2
-    _entityShootSpeed: 5
-    _entityAttackPrefab: {fileID: 549261088877501598, guid: 6b11985a3eb1f4a4f8071ae256d6084d, type: 3}
+    _entityShootDelay: 0.3
+    _entityShootSpeed: 3
+    _entityAttackPrefab: {fileID: 549261088877501598, guid: 6b11985a3eb1f4a4f8071ae256d6084d,
+      type: 3}
     _increaseFactorForSpeed: 10
     _isEntityCanDodge: 0
   _isModeCanRepeatLast: 1
@@ -1687,8 +1691,8 @@ MonoBehaviour:
   - {fileID: 1281429239}
   _scrollAxis: Mouse ScrollWheel
   _maxExpansion: 2
-  _minExpansion: 2
-  _expansionStep: 0.1
+  _minExpansion: 1
+  _expansionStep: 0.2
 --- !u!1 &1549517544
 GameObject:
   m_ObjectHideFlags: 0
@@ -1737,7 +1741,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26b50343035a8e84586bfaa57744a4fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefabForVisualization: {fileID: 8296820748460096341, guid: 807ca46ee56dca345b4449d8948dcd9f, type: 3}
+  _prefabForVisualization: {fileID: 8296820748460096341, guid: 807ca46ee56dca345b4449d8948dcd9f,
+    type: 3}
   _isPrefabForRightSide: 1
   _objectThatContainMouseController: {fileID: 1839704846}
   _objectWhereSpawn: {fileID: 1549517544}
@@ -1964,7 +1969,7 @@ MonoBehaviour:
   _quantityOfCursorZones: 9
   _quantityOfCenterZones: 3
   _degreeGround: 2
-  _isConnectToEnergySystem: 1
+  _isConnectToEnergySystem: 0
   _energyWaste: 0.1
   _increaseFactorForSpeed: 10
 --- !u!1 &2021023173
@@ -2013,7 +2018,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _object: {fileID: 20253142951584349, guid: 83d277bfcf7fc9c4db2ca0b939e1b738, type: 3}
-  _quantity: 2
+  _quantity: 3
   _interval: 5
   _centerInterval: 5
   _spawnStartPosition: {x: 0, y: 4, z: 0}
@@ -2047,7 +2052,8 @@ Rigidbody2D:
   m_Constraints: 0
 --- !u!4 &2141888907 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 3179624041822376006, guid: a03001d0d4b863e4e9dd39a6db9a80ed, type: 3}
+  m_CorrespondingSourceObject: {fileID: 3179624041822376006, guid: a03001d0d4b863e4e9dd39a6db9a80ed,
+    type: 3}
   m_PrefabInstance: {fileID: 6347033199670422361}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6347033199670422361
@@ -2058,47 +2064,58 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1430206307}
     m_Modifications:
-    - target: {fileID: 3179624041822376006, guid: a03001d0d4b863e4e9dd39a6db9a80ed, type: 3}
+    - target: {fileID: 3179624041822376006, guid: a03001d0d4b863e4e9dd39a6db9a80ed,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3179624041822376006, guid: a03001d0d4b863e4e9dd39a6db9a80ed, type: 3}
+    - target: {fileID: 3179624041822376006, guid: a03001d0d4b863e4e9dd39a6db9a80ed,
+        type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3179624041822376006, guid: a03001d0d4b863e4e9dd39a6db9a80ed, type: 3}
+    - target: {fileID: 3179624041822376006, guid: a03001d0d4b863e4e9dd39a6db9a80ed,
+        type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3179624041822376006, guid: a03001d0d4b863e4e9dd39a6db9a80ed, type: 3}
+    - target: {fileID: 3179624041822376006, guid: a03001d0d4b863e4e9dd39a6db9a80ed,
+        type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 3179624041822376006, guid: a03001d0d4b863e4e9dd39a6db9a80ed, type: 3}
+    - target: {fileID: 3179624041822376006, guid: a03001d0d4b863e4e9dd39a6db9a80ed,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3179624041822376006, guid: a03001d0d4b863e4e9dd39a6db9a80ed, type: 3}
+    - target: {fileID: 3179624041822376006, guid: a03001d0d4b863e4e9dd39a6db9a80ed,
+        type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3179624041822376006, guid: a03001d0d4b863e4e9dd39a6db9a80ed, type: 3}
+    - target: {fileID: 3179624041822376006, guid: a03001d0d4b863e4e9dd39a6db9a80ed,
+        type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3179624041822376006, guid: a03001d0d4b863e4e9dd39a6db9a80ed, type: 3}
+    - target: {fileID: 3179624041822376006, guid: a03001d0d4b863e4e9dd39a6db9a80ed,
+        type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3179624041822376006, guid: a03001d0d4b863e4e9dd39a6db9a80ed, type: 3}
+    - target: {fileID: 3179624041822376006, guid: a03001d0d4b863e4e9dd39a6db9a80ed,
+        type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3179624041822376006, guid: a03001d0d4b863e4e9dd39a6db9a80ed, type: 3}
+    - target: {fileID: 3179624041822376006, guid: a03001d0d4b863e4e9dd39a6db9a80ed,
+        type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4109642832448091177, guid: a03001d0d4b863e4e9dd39a6db9a80ed, type: 3}
+    - target: {fileID: 4109642832448091177, guid: a03001d0d4b863e4e9dd39a6db9a80ed,
+        type: 3}
       propertyPath: m_Name
       value: MainTheme
       objectReference: {fileID: 0}
