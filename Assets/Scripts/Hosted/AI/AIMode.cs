@@ -26,7 +26,7 @@ public class AIMode : ICloneable
     public GameObject EntityAttackPrefab => _entityAttackPrefab; 
     public float EntityShootSpeed => _entityShootSpeed;
     public float _nowDuration { get; set; }
-
+    
     public enum Modes {
         PURSUIT,
         FREE,

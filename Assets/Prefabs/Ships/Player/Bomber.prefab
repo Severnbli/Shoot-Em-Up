@@ -268,9 +268,9 @@ MonoBehaviour:
     _handlerType: 0
   _isKeyActive: 1
   _isSkillActive: 1
-  _delay: 0.05
+  _delay: 2
   _isConnectToEnergySystem: 1
-  _energyWaste: 2
+  _energyWaste: 10
   _armorAddAmount: 10
   _setupType: 1
 --- !u!114 &-4410136511923455840
@@ -285,3 +285,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb5c8a32bd6000142a0787fb334f1a49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _energyGroup: Bomber

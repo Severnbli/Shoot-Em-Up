@@ -288,6 +288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb5c8a32bd6000142a0787fb334f1a49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _energyGroup: Frigate
 --- !u!1 &4963939348220507654
 GameObject:
   m_ObjectHideFlags: 0

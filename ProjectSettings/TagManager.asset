@@ -16,6 +16,7 @@ TagManager:
   - Fireball
   - Spawner
   - MousePlayerController
+  - MovementDirection
   layers:
   - Default
   - TransparentFX

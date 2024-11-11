@@ -255,6 +255,7 @@ MonoBehaviour:
   _projectileStartTransform: {fileID: 2885414067086352196}
   _targetsTags:
   - Enemy
+  _isProjectileHasHorizontalMovement: 1
 --- !u!114 &4666143992734680119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,6 +268,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb5c8a32bd6000142a0787fb334f1a49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _energyGroup: Battlecruiser
 --- !u!1 &9116827202503633291
 GameObject:
   m_ObjectHideFlags: 0

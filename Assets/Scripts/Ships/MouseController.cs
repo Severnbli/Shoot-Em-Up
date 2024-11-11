@@ -23,6 +23,7 @@ public class MouseController : MonoBehaviour
 
     private List<int> _centerZonesSpecificValues; // Специальные значения центральных зон
     [SerializeField] private float _increaseFactorForSpeed = 10f;
+    private int _nowValue;
 
     private enum ModificationTypes { // Вид функции, по которой будет считаться текущая скорость
         DIVISION,
@@ -61,7 +62,7 @@ public class MouseController : MonoBehaviour
         }
     }
 
-    void FixedUpdate() {
+    void Update() {
         _centerZonesSpecificValues = GetCenterZonesValues();
 
         int specificValue = GetNowSpecificValue();
@@ -99,6 +100,7 @@ public class MouseController : MonoBehaviour
         foreach (int val in _centerZonesSpecificValues) {
             if (value == val) { // Значение попадает в центральные значения
                 SetVelocity(0); // Прекратить движение
+                _nowValue = 0;
                 return;
             }
         }
@@ -113,6 +115,8 @@ public class MouseController : MonoBehaviour
         } else if (value < maximumCenterValue) { // Левее центральных
             value = value - maximumInfluenceValue - 1;
         }
+
+        _nowValue = value;
 
         if (_energyController && !_energyController.IsEnoughEnergyAndWasteIfEnough(_energyWaste * Mathf.Abs(value) / maximumInfluenceValue)) {
             SetVelocity(0);
@@ -176,5 +180,9 @@ public class MouseController : MonoBehaviour
                 rb.velocity = new Vector2(velocityX * _increaseFactorForSpeed * Time.deltaTime, 0);
             }
         }
+    }
+
+    public int GetNowValue() {
+        return _nowValue;
     }
 }
