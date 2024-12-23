@@ -65,7 +65,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: -3, z: 3}
+  m_LocalScale: {x: 1.7, y: -2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6574447011583956688}
@@ -112,7 +112,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 5303613542408706994, guid: 8c3d35432872b1843868aeadeeecd010, type: 3}
+  m_Sprite: {fileID: 5303613542408706994, guid: 8c3d35432872b1843868aeadeeecd010,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -268,7 +269,7 @@ MonoBehaviour:
     _handlerType: 0
   _isKeyActive: 1
   _isSkillActive: 1
-  _delay: 0.05
+  _delay: 0.1
   _isConnectToEnergySystem: 1
   _energyWaste: 2
   _armorAddAmount: 10

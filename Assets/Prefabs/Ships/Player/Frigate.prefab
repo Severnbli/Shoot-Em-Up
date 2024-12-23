@@ -82,7 +82,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: -634762783340047863, guid: 9d987051fac2e2448a51f42b411a1ccf, type: 3}
+  m_Sprite: {fileID: -634762783340047863, guid: 9d987051fac2e2448a51f42b411a1ccf,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -267,8 +268,9 @@ MonoBehaviour:
   _isSkillActive: 1
   _delay: 0.5
   _isConnectToEnergySystem: 1
-  _energyWaste: 5
-  _projectile: {fileID: 7359522011428763970, guid: f27c9d16db42c0b4f96d4a9e9a427aef, type: 3}
+  _energyWaste: 4
+  _projectile: {fileID: 7359522011428763970, guid: f27c9d16db42c0b4f96d4a9e9a427aef,
+    type: 3}
   _speed: 7
   _damageAmount: 10
   _localScaleFactor: 1

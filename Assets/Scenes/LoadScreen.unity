@@ -177,7 +177,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isThisLoadingScreen: 1
-  _loadingTime: 10
+  _loadingTime: 2
+  _isFadeOnTheStartOk: 1
 --- !u!114 &839154
 MonoBehaviour:
   m_ObjectHideFlags: 0
